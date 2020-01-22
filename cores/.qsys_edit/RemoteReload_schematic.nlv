@@ -1,0 +1,17 @@
+# # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
+# 
+preplace inst RemoteReload.remote_update_0.remote_update_core -pg 1
+preplace inst RemoteReload.remote_update_0 -pg 1 -lvl 1 -y 50
+preplace inst RemoteReload.remote_update_0.clk_bridge -pg 1
+preplace inst RemoteReload.remote_update_0.reset_bridge -pg 1
+preplace inst RemoteReload -pg 1 -lvl 1 -y 40 -regy -20
+preplace netloc EXPORT<net_container>RemoteReload</net_container>(SLAVE)remote_update_0.reset,(SLAVE)RemoteReload.reset) 1 0 1 NJ
+preplace netloc EXPORT<net_container>RemoteReload</net_container>(SLAVE)RemoteReload.data_out,(SLAVE)remote_update_0.data_out) 1 0 1 NJ
+preplace netloc EXPORT<net_container>RemoteReload</net_container>(SLAVE)RemoteReload.clock,(SLAVE)remote_update_0.clock) 1 0 1 NJ
+preplace netloc EXPORT<net_container>RemoteReload</net_container>(SLAVE)RemoteReload.busy,(SLAVE)remote_update_0.busy) 1 0 1 NJ
+preplace netloc EXPORT<net_container>RemoteReload</net_container>(SLAVE)RemoteReload.param,(SLAVE)remote_update_0.param) 1 0 1 NJ
+preplace netloc EXPORT<net_container>RemoteReload</net_container>(SLAVE)remote_update_0.reset_timer,(SLAVE)RemoteReload.reset_timer) 1 0 1 NJ
+preplace netloc EXPORT<net_container>RemoteReload</net_container>(SLAVE)RemoteReload.read_param,(SLAVE)remote_update_0.read_param) 1 0 1 NJ
+preplace netloc EXPORT<net_container>RemoteReload</net_container>(SLAVE)RemoteReload.reconfig,(SLAVE)remote_update_0.reconfig) 1 0 1 NJ
+levelinfo -pg 1 0 80 300
+levelinfo -hier RemoteReload 90 180 290

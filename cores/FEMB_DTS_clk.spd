@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="FEMB_DTS_clk_sim/FEMB_DTS_clk.vho" type="VHDL" />
+ <topLevel name="FEMB_DTS_clk" />
+ <deviceFamily name="arriav" />
+</simPackage>

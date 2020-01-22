@@ -1,0 +1,44 @@
+2018-04-14-01
+ - New resetting to fix event builder clock issues
+2019-03-01-01
+ - PDTS lock-on issues
+2018-02-27-01
+ - Added other rate counters.
+ - Cleaned up timestamp code
+2018-02-26-01
+ - Matched FEMB timing to Jack's firmware
+ - Fixed constraints on FEMB commands
+ - Changed FEMB stream processing timing to Si derived clock
+ - Updated FEMB -> FEMB processing FIFO logic. 
+2018-02-20.01
+ - Added global FEMB counter reset.
+ - Some timing updates (from hidded earlier version).
+ - Aded EB clocking reset (from hidden earlier version).
+2018-01-24.01
+ - Fixed bug in the daq reset register that reset the FEMB comm.
+2017-12-06.02
+ - This update appears to fix the issues with data alignment from the FEMBs.
+ - There is an issue when the FEMB frame's checksum is 0x0000 or 0x0001 that needs to be further investigated.
+ - The current configuration process sometimes fails and requires a second configuration.  This needs further investigation.
+ - IP address mapping has been updated.
+2017-12-04.02
+ - Updated FEMB transceiver clocking and updated resets.
+ - Added DAQ PATH reset action register at address 0x100 mask 0x8.
+ - Write to this bit after you've setup the FEMB source but before you have enabled the FEMBs or DAQ links.
+ - Still not working with real FEMB data, but works with FAKE FEMB data.
+2017-11-10.01
+ - Fixed DTS, but I can't change the version number because compiles sometimes make bad DTS timing
+ - This firmware's version number is incorrectly set as 11-07, but the time states it is from 11-10 (>read 0x101 0x0101: 0x17110701 >read 0x102 0x0102: 0x20171110 >read 0x103 0x0103: 0x00114611)
+
+2017-11-07.01
+ - Added FEMB spy buffer code.  (untested)
+2017-11-06.01
+ - Switched pDTS Si clocks around so that the 100Mhz goes down to the FEMBs directly.
+ - There is a new Si configuration file with the firmware that needs to be tested at CERN before being merged into the Tool SVN.
+2017-11-02.01
+ - Found miscommunication bug in FEMB data format. Added data capture state that skips the first data word of stream since it is an idle word.
+ - Added signaltap to first FEMB's first stream to spy on data.
+2017-10-31.01
+ - Added master enable for FEMB bias.  This is bit 31 of address 0x400, or POWER.ENABLE.MASTER_BIAS .
+2017-10-23.01
+ - Updated IP address code for cold box (crate ID = 0x0)

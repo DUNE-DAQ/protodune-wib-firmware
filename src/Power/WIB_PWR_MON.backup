@@ -1,0 +1,894 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+
+use work.WIB_PWR_IO.all;
+use work.types.all;
+
+
+
+entity WIB_PWR_MON is
+  
+  port (
+    clk      : in    std_logic;
+    reset    : in    std_logic;
+    monitor  : out   WIB_PWR_Monitor_t;
+    control  : in    WIB_PWR_Control_t;
+    SCL : inout std_logic_vector(4 downto 0);         -- 2.5V, LTC2991 clk control
+    SDA : inout std_logic_vector(4 downto 0)         -- 2.5V, LTC2991 SDA control
+    );
+
+end entity WIB_PWR_MON;
+
+architecture behavioral of WIB_PWR_MON is
+  component I2C_reg_master is
+    generic (
+      I2C_QUARTER_PERIOD_CLOCK_COUNT : integer;
+      IGNORE_ACK                     : std_logic;
+      REG_ADDR_BYTE_COUNT            : integer;
+      USE_RESTART_FOR_READ_SEQUENCE  : std_logic);
+    port (
+      clk_sys     : in    std_logic;
+      reset       : in    std_logic;
+      I2C_Address : in    std_logic_vector(6 downto 0);
+      run         : in    std_logic;
+      rw          : in    std_logic;
+      reg_addr    : in    std_logic_vector((REG_ADDR_BYTE_COUNT*8) -1 downto 0);
+      rd_data     : out   std_logic_vector(31 downto 0);
+      wr_data     : in    std_logic_vector(31 downto 0);
+      byte_count  : in    std_logic_vector(2 downto 0);
+      done        : out   std_logic := '0';
+      error       : out   std_logic;
+      SDA         : inout std_logic;
+      SCLK        : inout std_logic);
+  end component I2C_reg_master;
+  
+  signal I2C_address : uint7_array_t(4 downto 0) := ();
+  signal run         : std_logic_vector(4 downto 0) := (others => '0');
+  signal rw          : std_logic_vector(4 downto 0) := (others => '0');
+  signal reg_addr    : uint8_array_t(4 downto 0);
+  signal rd_data     : uint32_array_t(4 downto 0);
+  signal wr_data     : uint32_array_t(4 downto 0);
+  signal byte_count  : uint3_array_t(4 downto 0);
+  signal done        : std_logic_vector(4 downto 0) := (others => '0');
+  signal I2C_error   : std_logic_vector(4 downto 0) := (others => '0');
+  
+begin  -- architecture behavioral
+
+
+  LTC2991CMS_interface: for iChip in 4 downto 0 generate
+    
+    I2C_reg_master_1: entity work.I2C_reg_master
+      generic map (
+        I2C_QUARTER_PERIOD_CLOCK_COUNT => 100,
+        IGNORE_ACK                     => '0',
+        REG_ADDR_BYTE_COUNT            => 1,
+        USE_RESTART_FOR_READ_SEQUENCE  => '1')
+      port map (
+        clk_sys     => clk,
+        reset       => '0',
+        I2C_Address => I2C_Address(iChip),
+        run         => run(iChip),
+        rw          => rw(iChip),
+        reg_addr    => reg_addr(iChip),
+        rd_data     => rd_data(iChip),
+        wr_data     => wr_data(iChip),
+        byte_count  => byte_count(iChip),
+        done        => done(iChip),
+        error       => I2C_error(iChip),
+        SDA         => SDA(iChip),
+        SCLK        => SCLK(iChip));
+  end generate LTC2991CMS_interface;
+
+  state_machine: process (clk, reset) is
+  begin  -- process state_machine
+    if reset = '1' then               -- asynchronous reset (active high)
+      state <= SM_IDLE;
+    elsif clk'event and clk = '1' then  -- rising clock edge
+      case state is
+        when SM_INIT =>
+          state <= SM_INIT_WAIT;
+        when SM_INIT_WAIT =>
+          
+        when SM_IDLE =>
+          
+        when others => null;
+      end case;
+    end if;
+  end process state_machine;
+
+  
+end architecture behavioral;
+
+
+
+
+
+
+
+
+
+ARCHITECTURE behavior OF WIB_PWR_MON IS
+
+
+
+  COMPONENT  I2c_master 
+    PORT
+      (
+        rst   	   	: IN 	STD_LOGIC;				
+        sys_clk	   	: IN 	STD_LOGIC;		
+        
+        SCL_O         	: INOUT 	STD_LOGIC;
+        SDA         	: INOUT 	STD_LOGIC;						
+        I2C_WR_STRB 	: IN STD_LOGIC;
+        I2C_RD_STRB 	: IN STD_LOGIC;
+        I2C_DEV_ADDR	: IN  STD_LOGIC_VECTOR(6 downto 0);		
+        I2C_NUM_BYTES	: IN  STD_LOGIC_VECTOR(3 downto 0);	  --I2C_NUM_BYTES --  For Writes 0 = address only,  1 = address + 1byte , 2 =  address + 2 bytes .... up to 4 bytes
+                                                                  --I2C_NUM_BYTES --  For Reads  0 = read 1 byte,   1 = read 1 byte,  2 = read 2 bytes  ..  up to 4 bytes
+        I2C_ADDRESS		: IN  STD_LOGIC_VECTOR(7 downto 0);	  -- used only with WR_STRB
+        I2C_DOUT			: OUT STD_LOGIC_VECTOR(31 downto 0);	
+        I2C_DIN			: IN  STD_LOGIC_VECTOR(31 downto 0);
+        I2C_BUSY       : OUT	STD_LOGIC;
+        I2C_DEV_AVL		: OUT STD_LOGIC
+	);
+
+  END COMPONENT;
+
+
+  type state_typ is (	s_idle ,s_ltc_setup1, s_ltc_setup2, s_ltc_setup3,s_ltc_setup4,
+                        s_ltc_SET_ADDR_0C, s_ltc_READ_0C , s_ltc_SET_ADDR_10, s_ltc_READ_10 , 
+                        s_ltc_SET_ADDR_14, s_ltc_READ_14 , s_ltc_SET_ADDR_18, s_ltc_READ_18 , 
+                        s_ltc_SET_ADDR_1A, s_ltc_READ_1A , s_ltc_SET_ADDR_1C, s_ltc_READ_1C ,
+                        s_ltc_SET_ADDR_0A, s_ltc_READ_0A , s_ltc_SET_ADDR_0E, s_ltc_READ_0E , 
+                        s_ltc_SET_ADDR_12, s_ltc_READ_12 , s_ltc_SET_ADDR_16, s_ltc_READ_16 , s_done );	
+
+  
+  SIGNAL STATE : state_typ;
+
+  SIGNAL data_index			: integer range 31 downto 0;
+  SIGNAL DLY_CNT 			: integer range 127 downto 0;		
+  SIGNAL DLY_CNT2 			: integer range 127 downto 0;			
+  SIGNAL I2C_WR_STRB		: STD_LOGIC;
+  SIGNAL I2C_RD_STRB		: STD_LOGIC;
+  SIGNAL I2C_DEV_ADDR		: STD_LOGIC_VECTOR(7 downto 0);
+  SIGNAL I2C_NUM_BYTES		: STD_LOGIC_VECTOR(3 downto 0);
+  SIGNAL I2C_ADDRESS		: STD_LOGIC_VECTOR(7 downto 0);
+  
+  SIGNAL I2C_DOUT_S1		: STD_LOGIC_VECTOR(31 downto 0);
+  SIGNAL I2C_DOUT_S2		: STD_LOGIC_VECTOR(31 downto 0);
+  SIGNAL I2C_DOUT_S3		: STD_LOGIC_VECTOR(31 downto 0);
+  SIGNAL I2C_DOUT_S4		: STD_LOGIC_VECTOR(31 downto 0);
+  SIGNAL I2C_DOUT_S5		: STD_LOGIC_VECTOR(31 downto 0);
+
+  
+  SIGNAL I2C_DIN				: STD_LOGIC_VECTOR(7 downto 0);
+  SIGNAL I2C_BUSY			: STD_LOGIC;
+
+  
+  SIGNAL DOUT_S1				: STD_LOGIC_VECTOR(15 downto 0);
+  SIGNAL DOUT_S2				: STD_LOGIC_VECTOR(15 downto 0);
+  SIGNAL DOUT_S3				: STD_LOGIC_VECTOR(15 downto 0);
+  SIGNAL DOUT_S4				: STD_LOGIC_VECTOR(15 downto 0);
+  SIGNAL DOUT_S5				: STD_LOGIC_VECTOR(15 downto 0);
+  
+  
+--	SIGNAL BIAS_VCC			:  STD_LOGIC_VECTOR(15 downto 0);	--- VCC = Result + 2.5V  (LSB = 305.18μV)
+--	SIGNAL BIAS_TEMP			:  STD_LOGIC_VECTOR(15 downto 0);	-- TEMP = LSB = 0.0625 Degrees  	
+--
+--	SIGNAL BRD1_VCC			:  STD_LOGIC_VECTOR(15 downto 0);	--- VCC = Result + 2.5V  (LSB = 305.18μV)
+--	SIGNAL BRD1_TEMP			:  STD_LOGIC_VECTOR(15 downto 0);	-- TEMP = LSB = 0.0625 Degrees  
+--	SIGNAL BRD1_V1				:  STD_LOGIC_VECTOR(15 downto 0);	-- LSB = 305.18μV = 2.5/2^13	(13 downto 0)
+--	SIGNAL monitor.FEMB(1).Current_1				:  STD_LOGIC_VECTOR(15 downto 0);	-- LSB = 305.18μV = 2.5/2^13  (13 downto 0)
+--	SIGNAL BRD1_V2				:  STD_LOGIC_VECTOR(15 downto 0);	-- LSB = 305.18μV = 2.5/2^13	(13 downto 0)
+--	SIGNAL monitor.FEMB(1).Current_2				:  STD_LOGIC_VECTOR(15 downto 0);	-- LSB = 305.18μV = 2.5/2^13  (13 downto 0)
+--	SIGNAL BRD1_V3				:  STD_LOGIC_VECTOR(15 downto 0);	-- LSB = 305.18μV = 2.5/2^13	(13 downto 0)
+--	SIGNAL monitor.FEMB(1).Current_3				:  STD_LOGIC_VECTOR(15 downto 0);	-- LSB = 305.18μV = 2.5/2^13  (13 downto 0)
+--	SIGNAL BRD1_V4				:  STD_LOGIC_VECTOR(15 downto 0);	-- LSB = 305.18μV = 2.5/2^13	(13 downto 0)
+--	SIGNAL monitor.FEMB(1).Current_4				:  STD_LOGIC_VECTOR(15 downto 0);	-- LSB = 305.18μV = 2.5/2^13  (13 downto 0)
+--	SIGNAL BRD1_V5				:  STD_LOGIC_VECTOR(15 downto 0);	-- LSB = 305.18μV = 2.5/2^13	(13 downto 0)
+--	SIGNAL monitor.FEMB(1).Current_5				:  STD_LOGIC_VECTOR(15 downto 0);	-- LSB = 305.18μV = 2.5/2^13  (13 downto 0)
+--
+  
+begin
+  
+
+  
+  
+
+  I2c_master_S1_inst  : I2c_master 
+    PORT MAP
+    (
+      rst   	   	=> rst,				
+      sys_clk	   	=> clk,		
+      SCL_O         	=> PWR_SCL_BRD0,
+      SDA         	=> PWR_SDA_BRD0,					
+      I2C_WR_STRB 	=> I2C_WR_STRB,
+      I2C_RD_STRB 	=> I2C_RD_STRB,
+      I2C_DEV_ADDR	=> I2C_DEV_ADDR(7 downto 1),
+      I2C_NUM_BYTES	=> I2C_NUM_BYTES,	
+      I2C_ADDRESS		=> I2C_ADDRESS,  -- used only with WR_STRB
+      I2C_DOUT			=> I2C_DOUT_S1,
+      I2C_DIN			=> x"000000" & I2C_DIN,
+      I2C_BUSY       => I2C_BUSY,
+      I2C_DEV_AVL		=> open
+      );
+  
+  
+  I2c_master_S2_inst  : I2c_master 
+    PORT MAP
+    (
+      rst   	   	=> rst,				
+      sys_clk	   	=> clk,		
+      SCL_O         	=> PWR_SCL_BRD1,
+      SDA         	=> PWR_SDA_BRD1,					
+      I2C_WR_STRB 	=> I2C_WR_STRB,
+      I2C_RD_STRB 	=> I2C_RD_STRB,
+      I2C_DEV_ADDR	=> I2C_DEV_ADDR(7 downto 1),
+      I2C_NUM_BYTES	=> I2C_NUM_BYTES,	
+      I2C_ADDRESS		=> I2C_ADDRESS,  -- used only with WR_STRB
+      I2C_DOUT			=> I2C_DOUT_S2,
+      I2C_DIN			=> x"000000" & I2C_DIN,
+      I2C_BUSY       => open,
+      I2C_DEV_AVL		=> open
+      );
+  
+  
+  I2c_master_S3_inst  : I2c_master 
+    PORT MAP
+    (
+      rst   	   	=> rst,				
+      sys_clk	   	=> clk,		
+      SCL_O         	=> PWR_SCL_BRD2,
+      SDA         	=> PWR_SDA_BRD2,					
+      I2C_WR_STRB 	=> I2C_WR_STRB,
+      I2C_RD_STRB 	=> I2C_RD_STRB,
+      I2C_DEV_ADDR	=> I2C_DEV_ADDR(7 downto 1),
+      I2C_NUM_BYTES	=> I2C_NUM_BYTES,	
+      I2C_ADDRESS		=> I2C_ADDRESS,  -- used only with WR_STRB
+      I2C_DOUT			=> I2C_DOUT_S3,
+      I2C_DIN			=> x"000000" & I2C_DIN,
+      I2C_BUSY       => open,
+      I2C_DEV_AVL		=> open
+      );
+  
+  
+  I2c_master_S4_inst  : I2c_master 
+    PORT MAP
+    (
+      rst   	   	=> rst,				
+      sys_clk	   	=> clk,		
+      SCL_O         	=> PWR_SCL_BRD3,
+      SDA         	=> PWR_SDA_BRD3,					
+      I2C_WR_STRB 	=> I2C_WR_STRB,
+      I2C_RD_STRB 	=> I2C_RD_STRB,
+      I2C_DEV_ADDR	=> I2C_DEV_ADDR(7 downto 1),
+      I2C_NUM_BYTES	=> I2C_NUM_BYTES,	
+      I2C_ADDRESS		=> I2C_ADDRESS,  -- used only with WR_STRB
+      I2C_DOUT			=> I2C_DOUT_S4,
+      I2C_DIN			=> x"000000" & I2C_DIN,
+      I2C_BUSY       => open,
+      I2C_DEV_AVL		=> open
+      );
+  
+  
+
+  
+  I2c_master_S5_inst  : I2c_master 
+    PORT MAP
+    (
+      rst   	   	=> rst,				
+      sys_clk	   	=> clk,		
+      SCL_O         	=> PWR_SCL_BIAS,
+      SDA         	=> PWR_SDA_BIAS,					
+      I2C_WR_STRB 	=> I2C_WR_STRB,
+      I2C_RD_STRB 	=> I2C_RD_STRB,
+      I2C_DEV_ADDR	=> I2C_DEV_ADDR(7 downto 1),
+      I2C_NUM_BYTES	=> I2C_NUM_BYTES,	
+      I2C_ADDRESS		=> I2C_ADDRESS,  -- used only with WR_STRB
+      I2C_DOUT			=> I2C_DOUT_S5,
+      I2C_DIN			=> x"000000" & I2C_DIN,
+      I2C_BUSY       => open,
+      I2C_DEV_AVL		=> open
+      );
+  
+  
+  
+  
+
+  DOUT_S1(7 downto 0)		<= I2C_DOUT_S1(15 downto 8);
+  DOUT_S1(15 downto 8)		<= I2C_DOUT_S1(7 downto 0);
+  DOUT_S2(7 downto 0)		<= I2C_DOUT_S2(15 downto 8);
+  DOUT_S2(15 downto 8)		<= I2C_DOUT_S2(7 downto 0);
+  DOUT_S3(7 downto 0)		<= I2C_DOUT_S3(15 downto 8);
+  DOUT_S3(15 downto 8)		<= I2C_DOUT_S3(7 downto 0);
+  DOUT_S4(7 downto 0)		<= I2C_DOUT_S4(15 downto 8);
+  DOUT_S4(15 downto 8)		<= I2C_DOUT_S4(7 downto 0);
+  DOUT_S5(7 downto 0)		<= I2C_DOUT_S5(15 downto 8);
+  DOUT_S5(15 downto 8)		<= I2C_DOUT_S5(7 downto 0);
+  
+  
+  
+  process( clk , rst )
+  begin
+    if ( rst = '1' ) then			
+      monitor.busy <= '0';
+      data_index		<= 0;
+      DLY_CNT			<= 0;
+      DLY_CNT2			<= 0;				
+      I2C_WR_STRB		<= '0';
+      I2C_RD_STRB		<= '0';
+      I2C_DEV_ADDR	<= x"00";
+      I2C_NUM_BYTES	<= x"0";
+      I2C_ADDRESS		<= x"00";
+      I2C_DIN			<= x"00";
+      
+      monitor.Bias_Vcc			<= ( others => '0' );	
+      monitor.Bias_temp		<= ( others => '0' );	
+      
+      monitor.FEMB(1).Vcc			<= ( others => '0' );	
+      monitor.FEMB(1).temp		<= ( others => '0' );	
+      monitor.FEMB(1).Voltage_1			<= ( others => '0' );	
+      monitor.FEMB(1).Current_1			<= ( others => '0' );	
+      monitor.FEMB(1).Voltage_2			<= ( others => '0' );	
+      monitor.FEMB(1).Current_2			<= ( others => '0' );	
+      monitor.FEMB(1).Voltage_3			<= ( others => '0' );	
+      monitor.FEMB(1).Current_3			<= ( others => '0' );	
+      monitor.FEMB(1).Voltage_4			<= ( others => '0' );	
+      monitor.FEMB(1).Current_4			<= ( others => '0' );	
+      monitor.FEMB(1).Voltage_5			<= ( others => '0' );	
+      monitor.FEMB(1).Current_5			<= ( others => '0' );		
+      
+      monitor.FEMB(2).Vcc			<= ( others => '0' );	
+      monitor.FEMB(2).temp		<= ( others => '0' );	
+      monitor.FEMB(2).Voltage_1			<= ( others => '0' );	
+      monitor.FEMB(2).Current_1			<= ( others => '0' );	
+      monitor.FEMB(2).Voltage_2			<= ( others => '0' );	
+      monitor.FEMB(2).Current_2			<= ( others => '0' );	
+      monitor.FEMB(2).Voltage_3			<= ( others => '0' );	
+      monitor.FEMB(2).Current_3			<= ( others => '0' );	
+      monitor.FEMB(2).Voltage_4			<= ( others => '0' );	
+      monitor.FEMB(2).Current_4			<= ( others => '0' );	
+      monitor.FEMB(2).Voltage_5			<= ( others => '0' );	
+      monitor.FEMB(2).Current_5			<= ( others => '0' );					
+      
+      monitor.FEMB(3).Vcc			<= ( others => '0' );	
+      monitor.FEMB(3).temp		<= ( others => '0' );	
+      monitor.FEMB(3).Voltage_1			<= ( others => '0' );	
+      monitor.FEMB(3).Current_1			<= ( others => '0' );	
+      monitor.FEMB(3).Voltage_2			<= ( others => '0' );	
+      monitor.FEMB(3).Current_2			<= ( others => '0' );	
+      monitor.FEMB(3).Voltage_3			<= ( others => '0' );	
+      monitor.FEMB(3).Current_3			<= ( others => '0' );	
+      monitor.FEMB(3).Voltage_4			<= ( others => '0' );	
+      monitor.FEMB(3).Current_4			<= ( others => '0' );	
+      monitor.FEMB(3).Voltage_5			<= ( others => '0' );	
+      monitor.FEMB(3).Current_5			<= ( others => '0' );					
+      
+      monitor.FEMB(4).Vcc			<= ( others => '0' );	
+      monitor.FEMB(4).temp		<= ( others => '0' );	
+      monitor.FEMB(4).Voltage_1			<= ( others => '0' );	
+      monitor.FEMB(4).Current_1			<= ( others => '0' );	
+      monitor.FEMB(4).Voltage_2			<= ( others => '0' );	
+      monitor.FEMB(4).Current_2			<= ( others => '0' );	
+      monitor.FEMB(4).Voltage_3			<= ( others => '0' );	
+      monitor.FEMB(4).Current_3			<= ( others => '0' );	
+      monitor.FEMB(4).Voltage_4			<= ( others => '0' );	
+      monitor.FEMB(4).Current_4			<= ( others => '0' );	
+      monitor.FEMB(4).Voltage_5			<= ( others => '0' );	
+      monitor.FEMB(4).Current_5			<= ( others => '0' );					
+      
+      
+      STATE 	<= s_idle;
+      
+    elsif rising_edge( clk ) then
+      monitor.busy <= '1'; -- default is busy
+      case STATE is
+        when s_idle =>	
+          monitor.busy <= '0'; -- if we are in idle, we aren't busy and
+                               -- override the above default
+          I2C_WR_STRB		<= '0';
+          I2C_RD_STRB		<= '0';
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"1";
+          I2C_ADDRESS		<= x"06";
+          I2C_DIN			<= x"99";
+          data_index		<= 0;
+          DLY_CNT			<= 0;
+          DLY_CNT2			<= 0;			
+          if (control.convert = '1') then 					
+            STATE 			<= s_ltc_setup1; 
+          end if;
+
+        when	s_ltc_setup1 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"1";
+          I2C_ADDRESS		<= x"06";
+          I2C_DIN			<= x"99"	;		
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_setup2; 
+            end if;
+          end if;				
+          
+        when	s_ltc_setup2 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"1";
+          I2C_ADDRESS		<= x"07";
+          I2C_DIN			<= x"99";		
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_setup3; 
+            end if;
+          end if;							
+          
+          
+        when	s_ltc_setup3 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"1";
+          I2C_ADDRESS		<= x"01";
+          I2C_DIN			<= x"FF";
+          DLY_CNT2			<= 0;
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_setup4 ; 
+            end if;
+          end if;							
+          
+          
+          -----------------------				ADD DELAYS	
+          
+          
+        when	s_ltc_setup4 =>
+          DLY_CNT2			<= DLY_CNT2 +1;	
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"0";
+          I2C_ADDRESS		<= x"00";
+          I2C_DIN			<= x"FF";		
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              if( DLY_CNT2 >= 10) then
+                STATE 			<= s_ltc_SET_ADDR_0C ; 
+              else
+                STATE 			<= s_ltc_setup4 ; 
+              end if;
+            end if;
+          end if;									
+          
+          
+-------------------		ltc2991   v1-v2		reg 0c
+        when	s_ltc_SET_ADDR_0C =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"0";
+          I2C_ADDRESS		<= x"0C";	
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_READ_0C; 
+            end if;
+          end if;							
+          
+
+        when	s_ltc_READ_0C =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"2";
+          if(DLY_CNT = 2) then
+            I2C_RD_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_RD_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;								
+              monitor.FEMB(1).Current_1  <= DOUT_S1;
+              monitor.FEMB(2).Current_1  <= DOUT_S2;
+              monitor.FEMB(3).Current_1  <= DOUT_S3;
+              monitor.FEMB(4).Current_1  <= DOUT_S4;								
+              monitor.FEMB(1).Current_5  <= DOUT_S5;
+              STATE 	<= s_ltc_SET_ADDR_10; 
+            end if;
+          end if;							
+          
+
+-------------------		ltc2991   v3-v4		reg 10						
+        when	s_ltc_SET_ADDR_10 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"0";
+          I2C_ADDRESS		<= x"10";	
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_READ_10; 
+            end if;
+          end if;							
+          
+
+        when	s_ltc_READ_10 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"2";
+          if(DLY_CNT = 2) then
+            I2C_RD_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_RD_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;								
+              monitor.FEMB(1).Current_2  <= DOUT_S1;
+              monitor.FEMB(2).Current_2  <= DOUT_S2;
+              monitor.FEMB(3).Current_2  <= DOUT_S3;
+              monitor.FEMB(4).Current_2  <= DOUT_S4;								
+              monitor.FEMB(2).Current_5  <= DOUT_S5;							
+              STATE 			<= s_ltc_SET_ADDR_14; 
+            end if;
+          end if;							
+          
+          
+
+-------------------		ltc2991   v5-v6		reg 14							
+        when	s_ltc_SET_ADDR_14 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"0";
+          I2C_ADDRESS		<= x"14";	
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_READ_14; 
+            end if;
+          end if;							
+          
+
+        when	s_ltc_READ_14 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"2";
+          if(DLY_CNT = 2) then
+            I2C_RD_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_RD_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;								
+              monitor.FEMB(1).Current_3  <= DOUT_S1;
+              monitor.FEMB(2).Current_3  <= DOUT_S2;
+              monitor.FEMB(3).Current_3  <= DOUT_S3;
+              monitor.FEMB(4).Current_3  <= DOUT_S4;								
+              monitor.FEMB(3).Current_5  <= DOUT_S5;							
+              STATE 			<= s_ltc_SET_ADDR_18;  
+            end if;
+          end if;							
+
+          
+-------------------		ltc2991   v7-v8		reg 18							
+        when	s_ltc_SET_ADDR_18 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"0";
+          I2C_ADDRESS		<= x"18";	
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_READ_18; 
+            end if;
+          end if;							
+          
+
+        when	s_ltc_READ_18 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"2";
+          if(DLY_CNT = 2) then
+            I2C_RD_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_RD_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;								
+              monitor.FEMB(1).Current_4  <= DOUT_S1;
+              monitor.FEMB(2).Current_4  <= DOUT_S2;
+              monitor.FEMB(3).Current_4  <= DOUT_S3;
+              monitor.FEMB(4).Current_4  <= DOUT_S4;								
+              monitor.FEMB(4).Current_5  <= DOUT_S5;								
+              STATE 			<= s_ltc_SET_ADDR_1A; 
+            end if;
+          end if;							
+          
+          
+-------------------		ltc2991   temp		reg 1A							
+        when	s_ltc_SET_ADDR_1A =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"0";
+          I2C_ADDRESS		<= x"1A";	
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_READ_1A; 
+            end if;
+          end if;							
+          
+
+        when	s_ltc_READ_1A =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"2";
+          if(DLY_CNT = 2) then
+            I2C_RD_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_RD_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;		
+              
+              monitor.FEMB(1).temp  <= DOUT_S1;
+              monitor.FEMB(2).temp  <= DOUT_S2;
+              monitor.FEMB(3).temp  <= DOUT_S3;
+              monitor.FEMB(4).temp  <= DOUT_S4;								
+              monitor.Bias_temp  <= DOUT_S5;			
+              
+              STATE 			<= s_ltc_SET_ADDR_1C; 
+            end if;
+          end if;							
+
+          
+
+-------------------		ltc2991   VCC		reg 1C							
+        when	s_ltc_SET_ADDR_1C =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"0";
+          I2C_ADDRESS		<= x"1C";	
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_READ_1C; 
+            end if;
+          end if;							
+          
+
+        when	s_ltc_READ_1C =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"2";
+          if(DLY_CNT = 2) then
+            I2C_RD_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_RD_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;								
+              monitor.FEMB(1).Vcc  <= DOUT_S1;
+              monitor.FEMB(2).Vcc  <= DOUT_S2;
+              monitor.FEMB(3).Vcc  <= DOUT_S3;
+              monitor.FEMB(4).Vcc  <= DOUT_S4;								
+              monitor.Bias_Vcc  <= DOUT_S5;									
+              STATE 			<= s_ltc_SET_ADDR_0A; 
+            end if;
+          end if;							
+
+
+          
+-------------------------------------------------------------------------------------------------------------------------						
+          
+          
+          
+          
+-------------------		ltc2991   v1		reg 0A
+        when	s_ltc_SET_ADDR_0A =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"0";
+          I2C_ADDRESS		<= x"0A";	
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_READ_0A; 
+            end if;
+          end if;							
+          
+
+        when	s_ltc_READ_0A =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"2";
+          if(DLY_CNT = 2) then
+            I2C_RD_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_RD_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;								
+              monitor.FEMB(1).Voltage_1  <= DOUT_S1;
+              monitor.FEMB(2).Voltage_1  <= DOUT_S2;
+              monitor.FEMB(3).Voltage_1  <= DOUT_S3;
+              monitor.FEMB(4).Voltage_1  <= DOUT_S4;								
+              monitor.FEMB(1).Voltage_5  <= DOUT_S5;
+              
+              STATE 			<= s_ltc_SET_ADDR_0E; 
+            end if;
+          end if;							
+          
+
+-------------------		ltc2991   v3		reg 10						
+        when	s_ltc_SET_ADDR_0E =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"0";
+          I2C_ADDRESS		<= x"0E";	
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_READ_0E; 
+            end if;
+          end if;							
+          
+
+        when	s_ltc_READ_0E =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"2";
+          if(DLY_CNT = 2) then
+            I2C_RD_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_RD_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;								
+              monitor.FEMB(1).Voltage_2  <= DOUT_S1;
+              monitor.FEMB(2).Voltage_2  <= DOUT_S2;
+              monitor.FEMB(3).Voltage_2  <= DOUT_S3;
+              monitor.FEMB(4).Voltage_2  <= DOUT_S4;								
+              monitor.FEMB(2).Voltage_5  <= DOUT_S5;							
+              STATE 			<= s_ltc_SET_ADDR_12; 
+            end if;
+          end if;							
+          
+          
+
+-------------------		ltc2991   v5		reg 12							
+        when	s_ltc_SET_ADDR_12  =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"0";
+          I2C_ADDRESS		<= x"12";	
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_READ_12; 
+            end if;
+          end if;							
+          
+
+        when	s_ltc_READ_12 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"2";
+          if(DLY_CNT = 2) then
+            I2C_RD_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_RD_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;								
+              monitor.FEMB(1).Voltage_3  <= DOUT_S1;
+              monitor.FEMB(2).Voltage_3  <= DOUT_S2;
+              monitor.FEMB(3).Voltage_3  <= DOUT_S3;
+              monitor.FEMB(4).Voltage_3  <= DOUT_S4;								
+              monitor.FEMB(3).Voltage_5  <= DOUT_S5;							
+              STATE 			<= s_ltc_SET_ADDR_16;  
+            end if;
+          end if;							
+
+          
+-------------------		ltc2991   v7		reg 16							
+        when	s_ltc_SET_ADDR_16 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"0";
+          I2C_ADDRESS		<= x"16";	
+          if(DLY_CNT = 2) then
+            I2C_WR_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_WR_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;
+              STATE 			<= s_ltc_READ_16; 
+            end if;
+          end if;							
+          
+
+        when	s_ltc_READ_16 =>
+          DLY_CNT 			<= DLY_CNT + 1;			
+          I2C_DEV_ADDR	<= x"90";
+          I2C_NUM_BYTES	<= x"2";
+          if(DLY_CNT = 2) then
+            I2C_RD_STRB		<= '1';
+          elsif	(DLY_CNT >= 10) then
+            I2C_RD_STRB		<= '0';
+            DLY_CNT 			<= 20;
+            if(I2C_BUSY = '0') then
+              DLY_CNT			<= 0;								
+              monitor.FEMB(1).Voltage_4  <= DOUT_S1;
+              monitor.FEMB(2).Voltage_4  <= DOUT_S2;
+              monitor.FEMB(3).Voltage_4  <= DOUT_S3;
+              monitor.FEMB(4).Voltage_4  <= DOUT_S4;								
+              monitor.FEMB(4).Voltage_5  <= DOUT_S5;								
+              STATE 			<= s_done; 
+            end if;
+          end if;														
+          
+        when s_done => 
+          if 	(control.convert = '1') then
+            STATE 	<= s_done;
+          else
+            STATE 	<= s_idle;
+          end if;
+        when others => 
+          STATE 	<= s_idle;
+      end case;   
+    end if;
+  end process ;
+  
+END behavior;

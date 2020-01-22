@@ -1,0 +1,8 @@
+a5_pin_model_dump.txt
+*.rpt
+*.sopcinfo
+db/
+incremental_db/
+output_files/
+reconfig_mif/
+src/fw_version.vhd

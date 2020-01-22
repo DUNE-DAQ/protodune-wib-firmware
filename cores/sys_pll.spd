@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="sys_pll_sim/sys_pll.vho" type="VHDL" />
+ <topLevel name="sys_pll" />
+ <deviceFamily name="arriav" />
+</simPackage>

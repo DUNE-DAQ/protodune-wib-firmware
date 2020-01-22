@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="PDTS_PLL_sim/PDTS_PLL.vho" type="VHDL" />
+ <topLevel name="PDTS_PLL" />
+ <deviceFamily name="arriav" />
+</simPackage>

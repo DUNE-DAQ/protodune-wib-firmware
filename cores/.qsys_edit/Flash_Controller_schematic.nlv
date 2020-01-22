@@ -1,0 +1,29 @@
+# # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
+# 
+preplace inst Flash_Controller.asmi_parallel_0 -pg 1 -lvl 1 -y 30
+preplace inst Flash_Controller -pg 1 -lvl 1 -y 40 -regy -20
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)Flash_Controller.illegal_write,(SLAVE)asmi_parallel_0.illegal_write) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)Flash_Controller.dataout,(SLAVE)asmi_parallel_0.dataout) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)Flash_Controller.addr,(SLAVE)asmi_parallel_0.addr) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.write,(SLAVE)Flash_Controller.write) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)Flash_Controller.read_status,(SLAVE)asmi_parallel_0.read_status) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.status_out,(SLAVE)Flash_Controller.status_out) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.bulk_erase,(SLAVE)Flash_Controller.bulk_erase) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.asmi_scein,(SLAVE)Flash_Controller.asmi_scein) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)Flash_Controller.data_valid,(SLAVE)asmi_parallel_0.data_valid) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)Flash_Controller.wren,(SLAVE)asmi_parallel_0.wren) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)Flash_Controller.illegal_erase,(SLAVE)asmi_parallel_0.illegal_erase) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.busy,(SLAVE)Flash_Controller.busy) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)Flash_Controller.asmi_sdoin,(SLAVE)asmi_parallel_0.asmi_sdoin) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.reset,(SLAVE)Flash_Controller.reset) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.rden,(SLAVE)Flash_Controller.rden) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.shift_bytes,(SLAVE)Flash_Controller.shift_bytes) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.datain,(SLAVE)Flash_Controller.datain) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.clkin,(SLAVE)Flash_Controller.clkin) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)Flash_Controller.asmi_dataout,(SLAVE)asmi_parallel_0.asmi_dataout) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.read_address,(SLAVE)Flash_Controller.read_address) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.fast_read,(SLAVE)Flash_Controller.fast_read) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)Flash_Controller.asmi_dclk,(SLAVE)asmi_parallel_0.asmi_dclk) 1 0 1 NJ
+preplace netloc EXPORT<net_container>Flash_Controller</net_container>(SLAVE)asmi_parallel_0.asmi_dataoe,(SLAVE)Flash_Controller.asmi_dataoe) 1 0 1 NJ
+levelinfo -pg 1 0 90 270
+levelinfo -hier Flash_Controller 100 130 260

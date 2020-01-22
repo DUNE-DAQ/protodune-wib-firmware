@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="REFCLK_PLL_sim/REFCLK_PLL.vho" type="VHDL" />
+ <topLevel name="REFCLK_PLL" />
+ <deviceFamily name="arriav" />
+</simPackage>

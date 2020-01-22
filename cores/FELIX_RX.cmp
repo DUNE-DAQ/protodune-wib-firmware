@@ -1,0 +1,16 @@
+	component FELIX_RX is
+		port (
+			rx_analogreset       : in  std_logic_vector(0 downto 0)  := (others => 'X'); -- rx_analogreset
+			rx_digitalreset      : in  std_logic_vector(0 downto 0)  := (others => 'X'); -- rx_digitalreset
+			rx_cdr_refclk        : in  std_logic_vector(0 downto 0)  := (others => 'X'); -- rx_cdr_refclk
+			rx_pma_clkout        : out std_logic_vector(0 downto 0);                     -- rx_pma_clkout
+			rx_serial_data       : in  std_logic_vector(0 downto 0)  := (others => 'X'); -- rx_serial_data
+			rx_pma_parallel_data : out std_logic_vector(79 downto 0);                    -- rx_pma_parallel_data
+			rx_is_lockedtoref    : out std_logic_vector(0 downto 0);                     -- rx_is_lockedtoref
+			rx_is_lockedtodata   : out std_logic_vector(0 downto 0);                     -- rx_is_lockedtodata
+			rx_cal_busy          : out std_logic_vector(0 downto 0);                     -- rx_cal_busy
+			reconfig_to_xcvr     : in  std_logic_vector(69 downto 0) := (others => 'X'); -- reconfig_to_xcvr
+			reconfig_from_xcvr   : out std_logic_vector(45 downto 0)                     -- reconfig_from_xcvr
+		);
+	end component FELIX_RX;
+

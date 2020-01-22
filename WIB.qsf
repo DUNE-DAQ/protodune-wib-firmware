@@ -1,0 +1,713 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 1991-2015 Altera Corporation. All rights reserved.
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, the Altera Quartus Prime License Agreement,
+# the Altera MegaCore Function License Agreement, or other 
+# applicable license agreement, including, without limitation, 
+# that your use is for the sole purpose of programming logic 
+# devices manufactured by Altera and sold by Altera or its 
+# authorized distributors.  Please refer to the applicable 
+# agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 15.1.0 Build 185 10/21/2015 SJ Standard Edition
+# Date created = 13:42:45  June 06, 2016
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		WIB_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus Prime software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+#set_instance_assigment -name GLOBAL_SIGNAL "GLOBAL CLOCK" -to "DTS_1|PDTS_clk_buffer|altclkctrl_0|SimpleClock_altclkctrl_0_sub_component|sd1|outclk"
+
+
+set_global_assignment -name FAMILY "Arria V"
+#set_global_assignment -name DEVICE 5AGXFA5H4F35C4
+#set_global_assignment -name DEVICE 5AGXFA5H4F35C4
+set_global_assignment -name DEVICE 5AGTFD3H3F35I3
+set_global_assignment -name TOP_LEVEL_ENTITY WIB
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 15.1.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "13:42:45  JUNE 06, 2016"
+set_global_assignment -name LAST_QUARTUS_VERSION "17.1.0 Standard Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name EDA_SIMULATION_TOOL "<None>"
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT NONE -section_id eda_simulation
+set_global_assignment -name EDA_RUN_TOOL_AUTOMATICALLY OFF -section_id eda_simulation
+set_global_assignment -name ENABLE_SIGNALTAP ON
+set_global_assignment -name USE_SIGNALTAP_FILE output_files/daq_link_test.stp
+set_global_assignment -name ENABLE_DRC_SETTINGS ON
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name OPTIMIZATION_MODE "AGGRESSIVE PERFORMANCE"
+set_global_assignment -name PRE_FLOW_SCRIPT_FILE "quartus_sh:src/timestamp.tcl"
+
+#set_location_assignment FF_X156_Y1_N37 -to "WIB|DTS:DTS_1|DTS_data_latched[9]"
+set_location_assignment FF_X156_Y1_N29 -to *pdts_rx_phy*wa[9]
+set_location_assignment FF_X154_Y4_N29 -to *pdts_rx_phy*rxphy|c
+
+set_location_assignment PIN_AM31 -to RESET_EXT
+set_location_assignment PIN_A16 -to CLK_IN_50Mhz
+
+#set_location_assignment PIN_AN34 -to AS_DATA[0]
+#set_location_assignment PIN_AN33 -to AS_DATA[1]
+#set_location_assignment PIN_AP33 -to AS_DATA[2]
+#set_location_assignment PIN_AM33 -to AS_DATA[3]
+#set_location_assignment PIN_AM32 -to AS_CLK
+#set_location_assignment PIN_AM34 -to AS_NCS
+
+set_location_assignment PIN_AP13 -to DTS_CDS_SOURCE
+set_location_assignment PIN_B21 -to DTS_CDS_LOL
+set_location_assignment PIN_E18 -to DTS_CDS_LOS
+
+#set_location_assignment PIN_K18 -to DUNE_clk_in_P
+set_location_assignment PIN_AL5 -to DUNE_clk_in_P
+set_location_assignment PIN_E1 -to DUNE_clk_out_P
+
+set_location_assignment PIN_AN3 -to DTS_data_clk_P
+set_location_assignment PIN_AP5 -to DTS_data_P
+
+set_location_assignment PIN_K29 -to DTS_FP_CLK_OUT_DSBL
+set_location_assignment PIN_H27 -to DTS_FP_CLK_OUT_P
+set_location_assignment PIN_AM11 -to DTS_BP_OUT_DSBL[0]
+set_location_assignment PIN_AL12 -to DTS_BP_OUT_DSBL[1]
+set_location_assignment PIN_AK15 -to DTS_BP_OUT_DSBL[2]
+set_location_assignment PIN_AK14 -to DTS_BP_OUT_DSBL[3]
+set_location_assignment PIN_AM8 -to DTS_BP_OUT_DSBL[4]
+set_location_assignment PIN_AK12 -to DTS_BP_OUT_DSBL[5]
+
+set_location_assignment PIN_K18 -to DTS_FEMB_clk_P
+
+set_location_assignment PIN_C8 -to DTS_SI5344_SCL
+set_location_assignment PIN_E9 -to DTS_SI5344_SDA
+set_location_assignment PIN_D8 -to DTS_SI5344_INT_N
+set_location_assignment PIN_A11 -to DTS_SI5344_OE_N
+set_location_assignment PIN_B11 -to DTS_SI5344_RST_N
+set_location_assignment PIN_B9 -to DTS_SI5344_LOL_N
+set_location_assignment PIN_A10 -to DTS_SI5344_LOS_N
+set_location_assignment PIN_C11 -to DTS_SI5344_IN_SEL[0]
+set_location_assignment PIN_D11 -to DTS_SI5344_IN_SEL[1]
+
+
+set_location_assignment PIN_AP30 -to TS_CS_N
+set_location_assignment PIN_AN30 -to TS_SCLK
+set_location_assignment PIN_AM30 -to TS_SDA
+
+
+set_location_assignment PIN_AN12 -to FEMB_CLK_SEL
+set_location_assignment PIN_G6 -to DCC_FPGA_CMD_P
+
+
+set_location_assignment PIN_R26 -to SFP_refclk_P
+set_location_assignment PIN_Y34 -to SFP_Rx_P
+set_location_assignment PIN_W32 -to SFP_Tx_P
+
+set_location_assignment PIN_G32 -to QSFP_TX_P[0]
+set_location_assignment PIN_L32 -to QSFP_TX_P[1]
+set_location_assignment PIN_N32 -to QSFP_TX_P[2]
+set_location_assignment PIN_U32 -to QSFP_TX_P[3]
+#set_location_assignment PIN_H34 -to QSFP_RX_P
+#RCE refclock
+set_location_assignment PIN_U26 -to RCE_Tx_refclk_P
+#FELIX refclock
+#set_location_assignment PIN_AA27 -to FELIX_Tx_refclk_P
+
+
+set_location_assignment PIN_C31 -to refclk_out
+
+
+set_location_assignment PIN_G25 -to DAQ_LINK_SI5342_LOL_N
+set_location_assignment PIN_F25 -to DAQ_LINK_SI5342_LOSXAXB_N
+set_location_assignment PIN_G26 -to DAQ_LINK_SI5342_LOS1_N
+set_location_assignment PIN_F22 -to DAQ_LINK_SI5342_LOS2_N
+set_location_assignment PIN_E21 -to DAQ_LINK_SI5342_LOS3_N
+set_location_assignment PIN_E30 -to DAQ_LINK_SI5342_OE_N
+set_location_assignment PIN_C28 -to DAQ_LINK_SI5342_RESET_N
+set_location_assignment PIN_B27 -to DAQ_LINK_SI5342_INT_N
+set_location_assignment PIN_A31 -to DAQ_LINK_SI5342_SCL
+set_location_assignment PIN_A30 -to DAQ_LINK_SI5342_SDA
+set_location_assignment PIN_B24 -to DAQ_LINK_SI5342_SEL0
+set_location_assignment PIN_E26 -to DAQ_LINK_SI5342_SEL1
+
+
+set_location_assignment PIN_E32 -to QSFP_RST_N
+set_location_assignment PIN_D18 -to QSFP_SDA
+set_location_assignment PIN_D32 -to QSFP_SCL
+set_location_assignment PIN_E20 -to QSFP_I2C_SEL_N
+set_location_assignment PIN_B29 -to QSFP_LOW_POWER_MODE
+set_location_assignment PIN_AL31 -to QSFP_INT_N
+set_location_assignment PIN_E14 -to QSFP_PRESENT_N
+
+
+set_location_assignment PIN_AP29 -to clk_FEMB_128Mhz_P
+set_location_assignment PIN_AK34 -to FEMB_RX_P[0]
+set_location_assignment PIN_AH34 -to FEMB_RX_P[1]
+set_location_assignment PIN_AF34 -to FEMB_RX_P[2]
+set_location_assignment PIN_AD34 -to FEMB_RX_P[3]
+set_location_assignment PIN_H1 -to FEMB_RX_P[4]
+set_location_assignment PIN_K1 -to FEMB_RX_P[5]
+set_location_assignment PIN_M1 -to FEMB_RX_P[6]
+set_location_assignment PIN_P1 -to FEMB_RX_P[7]
+set_location_assignment PIN_T1 -to FEMB_RX_P[8]
+set_location_assignment PIN_V1 -to FEMB_RX_P[9]
+set_location_assignment PIN_Y1 -to FEMB_RX_P[10]
+set_location_assignment PIN_AB1 -to FEMB_RX_P[11]
+set_location_assignment PIN_AD1 -to FEMB_RX_P[12]
+set_location_assignment PIN_AF1 -to FEMB_RX_P[13]
+set_location_assignment PIN_AH1 -to FEMB_RX_P[14]
+set_location_assignment PIN_AK1 -to FEMB_RX_P[15]
+set_location_assignment PIN_W26 -to FEMB_RX_refclk_P[0]
+set_location_assignment PIN_AA8 -to FEMB_RX_refclk_P[1]
+set_location_assignment PIN_D25 -to FEMB_LOS_n[0]
+set_location_assignment PIN_D27 -to FEMB_LOS_n[1]
+set_location_assignment PIN_B26 -to FEMB_LOS_n[2]
+set_location_assignment PIN_C23 -to FEMB_LOS_n[3]
+set_location_assignment PIN_E24 -to FEMB_LOS_n[4]
+set_location_assignment PIN_E27 -to FEMB_LOS_n[5]
+set_location_assignment PIN_A26 -to FEMB_LOS_n[6]
+set_location_assignment PIN_B23 -to FEMB_LOS_n[7]
+set_location_assignment PIN_D24 -to FEMB_LOS_n[8]
+set_location_assignment PIN_D26 -to FEMB_LOS_n[9]
+set_location_assignment PIN_A25 -to FEMB_LOS_n[10]
+set_location_assignment PIN_A23 -to FEMB_LOS_n[11]
+set_location_assignment PIN_D23 -to FEMB_LOS_n[12]
+set_location_assignment PIN_C26 -to FEMB_LOS_n[13]
+set_location_assignment PIN_C25 -to FEMB_LOS_n[14]
+set_location_assignment PIN_A22 -to FEMB_LOS_n[15]
+
+set_location_assignment PIN_A8 -to FEMB_SCL[0]
+set_location_assignment PIN_C10 -to FEMB_SCL[1]
+set_location_assignment PIN_AL9 -to FEMB_SCL[2]
+set_location_assignment PIN_AJ11 -to FEMB_SCL[3]
+set_location_assignment PIN_C6 -to FEMB_SDA_P[0]
+set_location_assignment PIN_A7 -to FEMB_SDA_P[1]
+set_location_assignment PIN_AP4 -to FEMB_SDA_P[2]
+set_location_assignment PIN_AJ10 -to FEMB_SDA_P[3]
+set_location_assignment PIN_D5 -to FEMB_SDA_N[0]
+set_location_assignment PIN_A6 -to FEMB_SDA_N[1]
+set_location_assignment PIN_AP3 -to FEMB_SDA_N[2]
+set_location_assignment PIN_AH10 -to FEMB_SDA_N[3]
+
+set_location_assignment PIN_AL21 -to PWR_EN_3V6[0]
+set_location_assignment PIN_AL20 -to PWR_EN_3V6[1]
+set_location_assignment PIN_AL19 -to PWR_EN_3V6[2]
+set_location_assignment PIN_AM19 -to PWR_EN_3V6[3]
+set_location_assignment PIN_AN21 -to PWR_EN_2V8[0]
+set_location_assignment PIN_AP20 -to PWR_EN_2V8[1]
+set_location_assignment PIN_AN20 -to PWR_EN_2V8[2]
+set_location_assignment PIN_AM20 -to PWR_EN_2V8[3]
+set_location_assignment PIN_AK23 -to PWR_EN_2V5[0]
+set_location_assignment PIN_AL22 -to PWR_EN_2V5[1]
+set_location_assignment PIN_AM22 -to PWR_EN_2V5[2]
+set_location_assignment PIN_AP22 -to PWR_EN_2V5[3]
+set_location_assignment PIN_AL24 -to PWR_EN_1V5[0]
+set_location_assignment PIN_AN23 -to PWR_EN_1V5[1]
+set_location_assignment PIN_AM23 -to PWR_EN_1V5[2]
+set_location_assignment PIN_AL23 -to PWR_EN_1V5[3]
+set_location_assignment PIN_AP19 -to PWR_EN_BIAS[0]
+set_location_assignment PIN_AN18 -to PWR_EN_BIAS[1]
+set_location_assignment PIN_AL18 -to PWR_EN_BIAS[2]
+set_location_assignment PIN_AL17 -to PWR_EN_BIAS[3]
+set_location_assignment PIN_AN27 -to PWR_EN_BIAS_MASTER
+
+
+set_location_assignment PIN_AN17 -to PWR_SCL[0]
+set_location_assignment PIN_AP17 -to PWR_SCL[1]
+set_location_assignment PIN_AP16 -to PWR_SCL[2]
+set_location_assignment PIN_AM16 -to PWR_SCL[3]
+set_location_assignment PIN_AM17 -to PWR_SCL[4]
+
+set_location_assignment PIN_AL15 -to PWR_SDA[0]
+set_location_assignment PIN_AN15 -to PWR_SDA[1]
+set_location_assignment PIN_AP23 -to PWR_SDA[2]
+set_location_assignment PIN_AP28 -to PWR_SDA[3]
+set_location_assignment PIN_AL16 -to PWR_SDA[4]
+
+set_location_assignment PIN_AM7 -to PWR_WIB_SCL
+set_location_assignment PIN_AN6 -to PWR_WIB_SDA
+
+
+set_location_assignment PIN_AN9 -to CRATE_ADDR[0]
+set_location_assignment PIN_AJ16 -to CRATE_ADDR[1]
+set_location_assignment PIN_AN8 -to CRATE_ADDR[2]
+set_location_assignment PIN_AP10 -to CRATE_ADDR[3]
+set_location_assignment PIN_AL14 -to SLOT_ADDR[0]
+set_location_assignment PIN_AM14 -to SLOT_ADDR[1]
+set_location_assignment PIN_AN14 -to SLOT_ADDR[2]
+set_location_assignment PIN_AP14 -to SLOT_ADDR[3]
+set_location_assignment PIN_A27 -to DIP_SW
+
+#set_location_assignment PIN_B17 -to LEMO_OUT
+#set_location_assignment PIN_B18 -to LEMO_OUT2
+
+set_location_assignment PIN_C29 -to LED[0]
+set_location_assignment PIN_A29 -to LED[1]
+set_location_assignment PIN_D30 -to LED[2]
+set_location_assignment PIN_B30 -to LED[3]
+set_location_assignment PIN_A28 -to LED[4]
+set_location_assignment PIN_F29 -to LED[5]
+set_location_assignment PIN_D28 -to LED[6]
+set_location_assignment PIN_F28 -to LED[7]
+
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to RESET_EXT
+set_instance_assignment -name IO_STANDARD "2.5 V" -to CLK_IN_50Mhz
+
+#set_instance_assignment -name IO_STANDARD "2.5 V" -to AS_DATA[0]
+#set_instance_assignment -name IO_STANDARD "2.5 V" -to AS_DATA[1]
+#set_instance_assignment -name IO_STANDARD "2.5 V" -to AS_DATA[2]
+#set_instance_assignment -name IO_STANDARD "2.5 V" -to AS_DATA[3]
+#set_instance_assignment -name IO_STANDARD "2.5 V" -to AS_CLK
+#set_instance_assignment -name IO_STANDARD "2.5 V" -to AS_NCS
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_IN_SEL
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_CDS_LOL
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_CDS_LOS
+
+set_instance_assignment -name IO_STANDARD LVDS -to DUNE_clk_in_P
+set_instance_assignment -name IO_STANDARD LVDS -to DUNE_clk_out_P
+set_instance_assignment -name IO_STANDARD LVDS -to DTS_data_clk_P
+set_instance_assignment -name IO_STANDARD LVDS -to DTS_data_P
+set_instance_assignment -name IO_STANDARD LVDS -to DTS_FEMB_clk_P
+set_instance_assignment -name IO_STANDARD LVDS -to DCC_FPGA_CMD_P
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_FP_CLK_OUT_DSBL
+set_instance_assignment -name IO_STANDARD LVDS -to DTS_FP_CLK_OUT_P
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_BP_OUT_DSBL[0]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to DTS_BP_OUT_DSBL[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_BP_OUT_DSBL[1]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to DTS_BP_OUT_DSBL[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_BP_OUT_DSBL[2]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to DTS_BP_OUT_DSBL[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_BP_OUT_DSBL[3]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to DTS_BP_OUT_DSBL[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_BP_OUT_DSBL[4]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to DTS_BP_OUT_DSBL[4]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_BP_OUT_DSBL[5]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to DTS_BP_OUT_DSBL[5]
+
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_SI5344_SCL
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_SI5344_SDA
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to DTS_SI5344_SDA
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_SI5344_INT_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_SI5344_OE_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_SI5344_RST_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_SI5344_LOL_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_SI5344_LOS_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_SI5344_IN_SEL[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_SI5344_IN_SEL[1]
+
+
+
+
+set_instance_assignment -name IO_STANDARD LVDS -to SFP_refclk_P
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to SFP_Rx_P
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to SFP_Tx_P
+
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to QSFP_TX_P[0]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to QSFP_TX_P[1]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to QSFP_TX_P[2]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to QSFP_TX_P[3]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to QSFP_RX_P
+set_instance_assignment -name IO_STANDARD LVDS -to RCE_Tx_refclk_P
+set_instance_assignment -name IO_STANDARD LVDS -to FELIX_Tx_refclk_P
+set_instance_assignment -name IO_STANDARD LVDS -to refclk_out
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_LOL_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_LOSXAXB_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_LOS1_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_LOS2_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_LOS3_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_OE_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_RESET_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_INT_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_SCL
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_SDA
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to DAQ_LINK_SI5342_SDA
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_SEL0
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DAQ_LINK_SI5342_SEL1
+set_instance_assignment -name IO_STANDARD "2.5 V" -to QSFP_RST_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to QSFP_I2C_SEL_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to QSFP_LOW_POWER_MODE
+set_instance_assignment -name IO_STANDARD "2.5 V" -to QSFP_INT_N
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to QSFP_INT_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to QSFP_PRESENT_N
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to QSFP_PRESENT_N
+set_instance_assignment -name IO_STANDARD "2.5 V" -to QSFP_SDA
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to QSFP_SDA
+set_instance_assignment -name IO_STANDARD "2.5 V" -to QSFP_SCL
+
+set_instance_assignment -name IO_STANDARD LVDS -to clk_FEMB_128Mhz_P
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[0]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[1]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[2]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[3]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[4]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[5]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[6]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[7]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[8]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[9]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[10]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[11]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[12]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[13]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[14]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_P[15]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_refclk_P[0]
+set_instance_assignment -name IO_STANDARD "1.5-V PCML" -to FEMB_RX_refclk_P[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[4]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[5]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[6]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[7]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[8]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[9]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[10]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[11]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[12]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[13]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[14]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to FEMB_LOS_n[15]
+
+
+set_instance_assignment -name IO_STANDARD LVDS -to FEMB_SCL[0]
+set_instance_assignment -name IO_STANDARD LVDS -to FEMB_SCL[1]
+set_instance_assignment -name IO_STANDARD LVDS -to FEMB_SCL[2]
+set_instance_assignment -name IO_STANDARD LVDS -to FEMB_SCL[3]
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 2.5-V SSTL CLASS I" -to FEMB_SDA_P[0]
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 2.5-V SSTL CLASS I" -to FEMB_SDA_P[1]
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 2.5-V SSTL CLASS I" -to FEMB_SDA_P[2]
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 2.5-V SSTL CLASS I" -to FEMB_SDA_P[3]
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 2.5-V SSTL CLASS I" -to FEMB_SDA_N[0]
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 2.5-V SSTL CLASS I" -to FEMB_SDA_N[1]
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 2.5-V SSTL CLASS I" -to FEMB_SDA_N[2]
+set_instance_assignment -name IO_STANDARD "DIFFERENTIAL 2.5-V SSTL CLASS I" -to FEMB_SDA_N[3]
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_3V6[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_3V6[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_3V6[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_3V6[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_2V8[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_2V8[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_2V8[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_2V8[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_2V5[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_2V5[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_2V5[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_2V5[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_1V5[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_1V5[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_1V5[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_1V5[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_BIAS[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_BIAS[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_BIAS[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_EN_BIAS[3]
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_SCL[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_SCL[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_SCL[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_SCL[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_SCL[4]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_SDA[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_SDA[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_SDA[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_SDA[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_SDA[4]
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_WIB_SCL
+set_instance_assignment -name IO_STANDARD "2.5 V" -to PWR_WIB_SDA
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to CRATE_ADDR[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to CRATE_ADDR[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to CRATE_ADDR[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to CRATE_ADDR[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SLOT_ADDR[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SLOT_ADDR[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SLOT_ADDR[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to SLOT_ADDR[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DIP_SW
+
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to TS_*
+
+
+
+set_instance_assignment -name IO_STANDARD "2.5 V" -to LED*
+
+set_location_assignment PIN_A2 -to LFLASH_SCL
+set_location_assignment PIN_B2 -to LFLASH_SDA
+set_instance_assignment -name IO_STANDARD "2.5 V" -to LFLASH_SCL
+set_instance_assignment -name IO_STANDARD "2.5 V" -to LFLASH_SDA
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to LFLASH_SDA
+
+
+
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CRATE_ADDR[0]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CRATE_ADDR[1]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CRATE_ADDR[2]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CRATE_ADDR[3]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SLOT_ADDR[0]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SLOT_ADDR[1]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SLOT_ADDR[2]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to SLOT_ADDR[3]
+set_global_assignment -name TIMEQUEST_MULTICORNER_ANALYSIS ON
+set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
+set_global_assignment -name PROJECT_IP_REGENERATION_POLICY ALWAYS_REGENERATE_IP
+set_global_assignment -name VHDL_INPUT_VERSION VHDL_1993
+set_global_assignment -name VHDL_SHOW_LMF_MAPPING_MESSAGES OFF
+set_global_assignment -name ENABLE_OCT_DONE OFF
+set_global_assignment -name ENABLE_CONFIGURATION_PINS OFF
+set_global_assignment -name ENABLE_BOOT_SEL_PIN OFF
+set_global_assignment -name STRATIXV_CONFIGURATION_SCHEME "ACTIVE SERIAL X4"
+set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name CRC_ERROR_OPEN_DRAIN ON
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
+set_global_assignment -name ACTIVE_SERIAL_CLOCK FREQ_100MHZ
+set_location_assignment PIN_F26 -to DTS_CDS_SDA
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_CDS_SDA
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to DTS_CDS_SDA
+set_location_assignment PIN_E23 -to DTS_CDS_SCL
+set_instance_assignment -name IO_STANDARD "2.5 V" -to DTS_CDS_SCL
+set_instance_assignment -name GLOBAL_SIGNAL GLOBAL_CLOCK -to "DTS:DTS_1|CDS_DATA_PLL:CDS_DATA_PLL_1|CDS_DATA_PLL_0002:cds_data_pll_inst|outclk_0" -disable
+set_instance_assignment -name GLOBAL_SIGNAL GLOBAL_CLOCK -to "DTS:DTS_1|CDS_BASE_PLL:CDS_BASE_PLL_1|CDS_BASE_PLL_0002:cds_base_pll_inst|outclk_0" -disable
+set_instance_assignment -name PLL_COMPENSATION_MODE SOURCE_SYNCHRONOUS -to DTS_data_P
+set_instance_assignment -name SLEW_RATE 0 -to DAQ_LINK_SI5342_SDA
+set_instance_assignment -name SLEW_RATE 0 -to DTS_CDS_SDA
+set_instance_assignment -name SLEW_RATE 0 -to DTS_SI5344_SDA
+set_instance_assignment -name SLEW_RATE 0 -to LFLASH_SDA
+set_instance_assignment -name SLEW_RATE 0 -to PWR_SDA[4]
+set_instance_assignment -name SLEW_RATE 0 -to PWR_SDA[3]
+set_instance_assignment -name SLEW_RATE 0 -to PWR_SDA[2]
+set_instance_assignment -name SLEW_RATE 0 -to PWR_SDA[1]
+set_instance_assignment -name SLEW_RATE 0 -to PWR_SDA[0]
+set_instance_assignment -name SLEW_RATE 0 -to PWR_WIB_SDA
+set_instance_assignment -name SLEW_RATE 0 -to QSFP_SDA
+set_instance_assignment -name SLEW_RATE 0 -to TS_SDA
+set_global_assignment -name STRATIXIII_UPDATE_MODE REMOTE
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_chklock.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_adjust.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_acmd_rx.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/trans_reseter.vhd
+set_global_assignment -name QIP_FILE cores/FELIX_link_Reset.qip
+set_global_assignment -name QIP_FILE cores/RCE_link_Reset.qip
+set_global_assignment -name VHDL_FILE src/misc/pipeline_delay.vhd
+set_global_assignment -name VHDL_FILE src/register_map/register_map_pass.vhd
+set_global_assignment -name VHDL_FILE src/misc/history_monitor.vhd
+set_global_assignment -name VHDL_FILE src/misc/history_monitor_IO.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_del.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_tx_phy.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_tx.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_ts_gen.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_sync_gen.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_sync_ctr.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_scmd_merge.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_scmd_gen_chan.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_scmd_gen.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_scmd_evt.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_rst_stretch.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_rob.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_prio_enc.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_idle_gen.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_fmc_io_loopback.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_fmc_io.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_endpoint_dummy.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_enc8b10b.vhd
+set_global_assignment -name VHDL_FILE src/register_map/timed_counter.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_DAQ/SpyBuffer.vhd
+set_global_assignment -name VHDL_FILE src/Power/WIB_PWR_POLL_MON.vhd
+set_global_assignment -name VHDL_FILE src/Power/WIB_PWR_IO.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/PCK_CRC20_D64.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/CRCD64_RCE.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/CRCD64_FELIX.vhd
+set_global_assignment -name VHDL_FILE src/TempSensor/TempSensor.vhd
+set_global_assignment -name VHDL_FILE src/localFlash/IMP_EEPROM_cntl.vhd
+set_global_assignment -name VHDL_FILE src/localFlash/eeprom_cntl.vhd
+set_global_assignment -name VHDL_FILE src/localFlash/localFlash.vhd
+set_global_assignment -name VHDL_FILE src/localFlash/localFlash_IO.vhd
+set_global_assignment -name VHDL_FILE src/udp_io/udp_io_package.vhd
+set_global_assignment -name VHDL_FILE src/pass_time_domain.vhd
+set_global_assignment -name SIGNALTAP_FILE output_files/daq_link_test.stp
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_rx_div_altera.vhd
+set_global_assignment -name VHDL_FILE src/DTS/DTS_tx.vhd
+set_global_assignment -name VHDL_FILE src/DTS/DTS_SI5344_Control.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_tstamp.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_synchro.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/outputlogic_crc16.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_cksum.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_code8b10bpkg.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_rx_si5344.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_rx_phy.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_rx.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_dec8b10b.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_ep_startup.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_defs.vhd
+set_global_assignment -name VHDL_FILE src/DTS/ProtoDUNE_TimingSystem/pdts_endpoint.vhd
+set_global_assignment -name VHDL_FILE src/DTS/DTS_package.vhd
+set_global_assignment -name VHDL_FILE src/DTS/DTS_Convert_Generation.vhd
+set_global_assignment -name VHDL_FILE src/DTS/DTS.vhd
+set_global_assignment -name VHDL_FILE src/DTS/Convert_package.vhd
+set_global_assignment -name QSYS_FILE cores/SimpleClock.qsys
+set_global_assignment -name VHDL_FILE src/Flash/i2c_master_16b_addr.vhd
+set_global_assignment -name VHDL_FILE src/i2c/I2C_reg_master.vhd
+set_global_assignment -name SOURCE_FILE encoder_8b10b.cmp
+set_global_assignment -name VHDL_FILE src/i2c/I2C_master.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/EthernetCRC32_D64.vhd
+set_global_assignment -name VHDL_FILE src/WIB_Constants.vhd
+set_global_assignment -name QSYS_FILE cores/RemoteReload.qsys
+set_global_assignment -name QSYS_FILE cores/FLASH_loader.qsys
+set_global_assignment -name QSYS_FILE cores/Flash_Controller.qsys
+set_global_assignment -name VHDL_FILE src/EventBuilder/GearBox.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/DAQ_LINK_EventBuilder.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/RCE/RCE_PCS.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/CD_EB_bridge_package.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/FELIX/FELIX_PCS.vhd
+set_global_assignment -name VERILOG_FILE src/EventBuilder/FELIX/encoder_8b10b.v
+set_global_assignment -name VHDL_FILE src/reset.vhd
+set_global_assignment -name VHDL_FILE src/Flash/eeprom_cntl.vhd
+set_global_assignment -name VHDL_FILE src/Flash/IMP_EEPROM_cntl.vhd
+set_global_assignment -name VHDL_FILE src/Flash/Flash_IO.vhd
+set_global_assignment -name VHDL_FILE src/Flash/Flash.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_CnC/SBND_PWM_CLK_ENCODER.vhd
+set_global_assignment -name VHDL_FILE src/dif_io_bir.vhd
+set_global_assignment -name QIP_FILE cores/BI_DIR_DIFF.qip
+set_global_assignment -name VHDL_FILE src/FEMB_SC/I2c_master_addr16.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_SC/WIB_FEMB_COMM.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_SC/WIB_FEMB_COMM_TOP.vhd
+set_global_assignment -name VHDL_FILE src/Power/WIB_PWR_MON.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_CnC/COLDATA_CnC_package.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_CnC/FEMB_CnC.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_CnC/FEMB_CnC_IO.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_DAQ/CD_Stream_Processor.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_DAQ/COLDATA_package.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_DAQ/COLDATA_Simulator.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_DAQ/FEMB_DAQ.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_DAQ/FEMB_DAQ_package.vhd
+set_global_assignment -name VHDL_FILE src/FEMB_DAQ/FEMB_Rx.vhd
+set_global_assignment -name SOURCE_FILE cores/WIB_TSE.cmp
+set_global_assignment -name VHDL_FILE src/fw_version.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/EthernetCRCD32.vhd
+set_global_assignment -name SOURCE_FILE cores/RCE_LINK.cmp
+set_global_assignment -name QSYS_FILE cores/DUNE_50Mhz_mux.qsys
+set_global_assignment -name QIP_FILE cores/DCC_PLL.qip
+set_global_assignment -name QIP_FILE cores/WIB_TSE.qip
+set_global_assignment -name VHDL_FILE src/SC/DQM_packet.vhd
+set_global_assignment -name VHDL_FILE src/SC/DQM_package.vhd
+set_global_assignment -name VHDL_FILE src/SC/DQM.vhd
+set_global_assignment -name VHDL_FILE src/pacd.vhd
+set_global_assignment -name VHDL_FILE src/register_map/counter.vhd
+set_global_assignment -name VHDL_FILE src/types_package.vhd
+set_global_assignment -name VHDL_FILE src/register_map/register_map_bridge.vhd
+set_global_assignment -name VHDL_FILE src/udp_io/udp_io.vhd
+set_global_assignment -name VHDL_FILE src/udp_io/mac_reg_cntl.vhd
+set_global_assignment -name VHDL_FILE src/udp_io/rx_frame.vhd
+set_global_assignment -name VHDL_FILE src/udp_io/tx_frame.vhd
+set_global_assignment -name VHDL_FILE src/udp_io/mac_reg_read.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/EventBuilder.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/EthernetCRCD16B.vhd
+set_global_assignment -name VHDL_FILE src/EventBuilder/EventBuilder_package.vhd
+set_global_assignment -name VHDL_FILE src/i2c/I2C_package.vhd
+set_global_assignment -name VHDL_FILE src/register_map/register_map.vhd
+set_global_assignment -name VHDL_FILE src/WIB_package.vhd
+set_global_assignment -name SDC_FILE src/WIB.sdc
+set_global_assignment -name VHDL_FILE src/al_const_wren.vhd
+set_global_assignment -name VHDL_FILE src/al_const_32bit.vhd
+set_global_assignment -name VHDL_FILE src/sys_rst.vhd
+set_global_assignment -name QIP_FILE cores/tse_rgmii.qip
+set_global_assignment -name QIP_FILE cores/sys_pll.qip
+set_global_assignment -name VHDL_FILE src/WIB.vhd
+set_global_assignment -name CDF_FILE output_files/Chain3.cdf
+set_global_assignment -name CDF_FILE output_files/Chain2.cdf
+set_global_assignment -name CDF_FILE output_files/Chain4.cdf
+set_global_assignment -name SIP_FILE cores/COLD_DATA_RxTx.sip
+set_global_assignment -name SIP_FILE cores/COLD_DATA_Reset.sip
+set_global_assignment -name SIP_FILE cores/COLD_DATA_Reconf.sip
+set_global_assignment -name CDF_FILE output_files/Chain1.cdf
+set_global_assignment -name VECTOR_WAVEFORM_FILE simulation/modelsim/COLDATA.vwf
+set_global_assignment -name CDF_FILE output_files/Chain5.cdf
+set_global_assignment -name CDF_FILE output_files/Chain6.cdf
+set_global_assignment -name CDF_FILE output_files/Chain8.cdf
+set_global_assignment -name CDF_FILE output_files/Chain9.cdf
+set_global_assignment -name CDF_FILE output_files/Chain10.cdf
+set_global_assignment -name QIP_FILE cores/CDRAM.qip
+set_global_assignment -name SIP_FILE cores/COLDATA_fPLL.sip
+set_global_assignment -name QIP_FILE cores/RCE_LINK.qip
+set_global_assignment -name SIP_FILE cores/RCE_LINK.sip
+set_global_assignment -name SIP_FILE cores/RCE_link_Reset.sip
+set_global_assignment -name SIP_FILE cores/RCE_link_reconf.sip
+set_global_assignment -name SIP_FILE cores/RCE_link_PLL.sip
+set_global_assignment -name QIP_FILE cores/RCE_FIFO.qip
+set_global_assignment -name QIP_FILE cores/IOREG_READ_ADDR_FIFO.qip
+set_global_assignment -name QIP_FILE cores/IOREG_READ_DATA_FIFO.qip
+set_global_assignment -name QIP_FILE cores/IOREG_WRITE_FIFO.qip
+set_global_assignment -name SIP_FILE cores/RCE_LOOPBACK_LINK.sip
+set_global_assignment -name QIP_FILE cores/DQM_FIFO.qip
+set_global_assignment -name QIP_FILE cores/COLDATA_RX.qip
+set_global_assignment -name SIP_FILE cores/COLDATA_RX.sip
+set_global_assignment -name QIP_FILE cores/SI5338_MEM.qip
+set_global_assignment -name QIP_FILE cores/DCC_FEMB_PLL.qip
+set_global_assignment -name SIP_FILE cores/DCC_FEMB_PLL.sip
+set_global_assignment -name QIP_FILE cores/DCC_DUNE_PLL.qip
+set_global_assignment -name SIP_FILE cores/DCC_DUNE_PLL.sip
+set_global_assignment -name QIP_FILE cores/PLL_128.qip
+set_global_assignment -name SIP_FILE cores/PLL_128.sip
+set_global_assignment -name QIP_FILE cores/RCE_SPY_BUFFER.qip
+set_global_assignment -name QIP_FILE cores/CONVERT_FIFO.qip
+set_global_assignment -name QIP_FILE cores/PDTS_PLL.qip
+set_global_assignment -name SIP_FILE cores/PDTS_PLL.sip
+set_global_assignment -name QIP_FILE cores/FELIX_LINK.qip
+set_global_assignment -name SIP_FILE cores/FELIX_LINK.sip
+set_global_assignment -name QIP_FILE cores/tx_packet_fifo.qip
+set_global_assignment -name SIP_FILE cores/RCE_PLL.sip
+set_global_assignment -name QIP_FILE cores/IOREG_WRITE_BUFFER_FIFO.qip
+set_global_assignment -name QIP_FILE cores/CDS_DATA_PLL.qip
+set_global_assignment -name SIP_FILE cores/CDS_DATA_PLL.sip
+set_global_assignment -name QIP_FILE cores/CDS_BASE_PLL.qip
+set_global_assignment -name SIP_FILE cores/CDS_BASE_PLL.sip
+set_global_assignment -name QIP_FILE cores/PDTS_input_delay.qip
+set_global_assignment -name QIP_FILE cores/REFCLK_PLL.qip
+set_global_assignment -name SIP_FILE cores/REFCLK_PLL.sip
+set_global_assignment -name QIP_FILE cores/FELIX_RX.qip
+set_global_assignment -name SIP_FILE cores/FELIX_RX.sip
+set_global_assignment -name QIP_FILE cores/Stream_SpyBuffer.qip
+set_global_assignment -name QIP_FILE cores/FEMB_DTS_clk.qip
+set_global_assignment -name SIP_FILE cores/FEMB_DTS_clk.sip
+set_global_assignment -name QIP_FILE cores/CD_FIFO.qip
+set_global_assignment -name QIP_FILE cores/CD_description_FIFO.qip
+set_global_assignment -name QIP_FILE cores/CD_RL_FIFO.qip
+set_global_assignment -name QIP_FILE cores/RCE_LINK_FIFO.qip
+set_global_assignment -name QIP_FILE cores/LINK_FIFO.qip
+set_global_assignment -name QIP_FILE cores/CD_Simulator_FIFO.qip
+
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

@@ -1,0 +1,119 @@
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_TOOL_NAME "altera_xcvr_native_av"
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_TOOL_VERSION "16.0"
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_TOOL_ENV "mwpim"
+set_global_assignment -library "FELIX_RX" -name MISC_FILE [file join $::quartus(qip_path) "FELIX_RX.cmp"]
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_TARGETED_DEVICE_FAMILY "Arria V"
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_GENERATED_DEVICE_FAMILY "{Arria V}"
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_QSYS_MODE "UNKNOWN"
+set_global_assignment -name SYNTHESIS_ONLY_QIP ON
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_COMPONENT_NAME "RkVMSVhfUlg="
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_COMPONENT_DISPLAY_NAME "QXJyaWEgViBUcmFuc2NlaXZlciBOYXRpdmUgUEhZ"
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_COMPONENT_INTERNAL "On"
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_COMPONENT_AUTHOR "QWx0ZXJhIENvcnBvcmF0aW9u"
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_COMPONENT_VERSION "MTYuMA=="
+set_global_assignment -entity "FELIX_RX" -library "FELIX_RX" -name IP_COMPONENT_DESCRIPTION "QXJyaWEgViBUcmFuc2NlaXZlciBOYXRpdmUgUEhZLg=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_NAME "YWx0ZXJhX3hjdnJfbmF0aXZlX2F2"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_DISPLAY_NAME "QXJyaWEgViBUcmFuc2NlaXZlciBOYXRpdmUgUEhZ"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_INTERNAL "On"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_AUTHOR "QWx0ZXJhIENvcnBvcmF0aW9u"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_VERSION "MTYuMA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_DESCRIPTION "QXJyaWEgViBUcmFuc2NlaXZlciBOYXRpdmUgUEhZLg=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "ZGV2aWNlX2ZhbWlseQ==::QXJyaWEgVg==::ZGV2aWNlX2ZhbWlseQ=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "ZGV2aWNlX3NwZWVkZ3JhZGU=::NV9INA==::RGV2aWNlIHNwZWVkZ3JhZGU="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bWVzc2FnZV9sZXZlbA==::ZXJyb3I=::TWVzc2FnZSBsZXZlbCBmb3IgcnVsZSB2aW9sYXRpb25z"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "dHhfZW5hYmxl::MA==::RW5hYmxlIFRYIGRhdGFwYXRo"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cnhfZW5hYmxl::MQ==::RW5hYmxlIFJYIGRhdGFwYXRo"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "ZW5hYmxlX3N0ZA==::MA==::RW5hYmxlIFN0YW5kYXJkIFBDUw=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "ZGF0YV9wYXRoX3NlbGVjdA==::cG1hX2RpcmVjdA==::ZGF0YV9wYXRoX3NlbGVjdA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "Y2hhbm5lbHM=::MQ==::TnVtYmVyIG9mIGRhdGEgY2hhbm5lbHM="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "ZW5hYmxlX3NpbXBsZV9pbnRlcmZhY2U=::MQ==::RW5hYmxlIHNpbXBsaWZpZWQgZGF0YSBpbnRlcmZhY2U="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "c2V0X2RhdGFfcmF0ZQ==::NDgwMA==::RGF0YSByYXRl"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "ZGF0YV9yYXRl::NDgwMCBNYnBz::ZGF0YV9yYXRl"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cG1hX3dpZHRo::ODA=::UENTIC8gUE1BIGludGVyZmFjZSB3aWR0aA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cG1hX2RpcmVjdF93aWR0aA==::ODA=::UE1BIGRpcmVjdCBpbnRlcmZhY2Ugd2lkdGg="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cGxsX3JlY29uZmlnX2VuYWJsZQ==::MA==::RW5hYmxlIFRYIFBMTCBkeW5hbWljIHJlY29uZmlndXJhdGlvbg=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cGxsX2RhdGFfcmF0ZQ==::NDgwMCBNYnBz::cGxsX2RhdGFfcmF0ZQ=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cGxsX3R5cGU=::Q01V::cGxsX3R5cGU="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cG1hX2JvbmRpbmdfbW9kZQ==::eDE=::cG1hX2JvbmRpbmdfbW9kZQ=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cGxsX3JlZmNsa19zZWxlY3Q=::MA==::cGxsX3JlZmNsa19zZWxlY3Q="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cGxsX3JlZmNsa19mcmVx::dW51c2Vk::cGxsX3JlZmNsa19mcmVx"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cGxsX2ZlZWRiYWNrX3BhdGg=::aW50ZXJuYWw=::cGxsX2ZlZWRiYWNrX3BhdGg="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "Y2RyX3JlY29uZmlnX2VuYWJsZQ==::MA==::RW5hYmxlIENEUiBkeW5hbWljIHJlY29uZmlndXJhdGlvbg=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "Y2RyX3JlZmNsa19jbnQ=::MQ==::TnVtYmVyIG9mIENEUiByZWZlcmVuY2UgY2xvY2tz"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "Y2RyX3JlZmNsa19zZWxlY3Q=::MA==::U2VsZWN0ZWQgQ0RSIHJlZmVyZW5jZSBjbG9jaw=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "Y2RyX3JlZmNsa19mcmVx::MTIwLjAgTUh6::Y2RyX3JlZmNsa19mcmVx"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "c2V0X2Nkcl9yZWZjbGtfZnJlcQ==::MTIwLjAgTUh6::U2VsZWN0ZWQgQ0RSIHJlZmVyZW5jZSBjbG9jayBmcmVxdWVuY3k="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cnhfcHBtX2RldGVjdF90aHJlc2hvbGQ=::MTAwMA==::UFBNIGRldGVjdG9yIHRocmVzaG9sZA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "ZW5hYmxlX3BvcnRfcnhfcG1hX2Nsa291dA==::MQ==::RW5hYmxlIHJ4X3BtYV9jbGtvdXQgcG9ydA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "ZW5hYmxlX3BvcnRfcnhfaXNfbG9ja2VkdG9kYXRh::MQ==::RW5hYmxlIHJ4X2lzX2xvY2tlZHRvZGF0YSBwb3J0"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "ZW5hYmxlX3BvcnRfcnhfaXNfbG9ja2VkdG9yZWY=::MQ==::RW5hYmxlIHJ4X2lzX2xvY2tlZHRvcmVmIHBvcnQ="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "ZW5hYmxlX3BvcnRzX3J4X21hbnVhbF9jZHJfbW9kZQ==::MA==::RW5hYmxlIHJ4X3NldF9sb2NrdG9kYXRhIGFuZCByeF9zZXRfbG9ja3RvcmVmIHBvcnRz"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "cnhfY2xrc2xpcF9lbmFibGU=::MA==::RW5hYmxlIHJ4X2Nsa3NsaXAgcG9ydA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "ZW5hYmxlX3BvcnRfcnhfc2lnbmFsZGV0ZWN0::MA==::RW5hYmxlIHJ4X3NpZ25hbGRldGVjdCBwb3J0"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9wbGxfc2V0dGluZ3M=::MA==::bF9wbGxfc2V0dGluZ3M="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9lbmFibGVfdHhfcG1hX2RpcmVjdA==::MA==::bF9lbmFibGVfdHhfcG1hX2RpcmVjdA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9lbmFibGVfcnhfcG1hX2RpcmVjdA==::MQ==::bF9lbmFibGVfcnhfcG1hX2RpcmVjdA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9lbmFibGVfdHhfc3Rk::MA==::bF9lbmFibGVfdHhfc3Rk"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9lbmFibGVfcnhfc3Rk::MA==::bF9lbmFibGVfcnhfc3Rk"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9lbmFibGVfcnhfc3RkX3dvcmRfYWxpZ25lcg==::MA==::bF9lbmFibGVfcnhfc3RkX3dvcmRfYWxpZ25lcg=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9uZXRsaXN0X3BsbHM=::MQ==::bF9uZXRsaXN0X3BsbHM="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9yY2ZnX2ludGVyZmFjZXM=::MQ==::bF9yY2ZnX2ludGVyZmFjZXM="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9yY2ZnX3RvX3hjdnJfd2lkdGg=::NzA=::bF9yY2ZnX3RvX3hjdnJfd2lkdGg="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9yY2ZnX2Zyb21feGN2cl93aWR0aA==::NDY=::bF9yY2ZnX2Zyb21feGN2cl93aWR0aA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9wbWFfZGlyZWN0X3dvcmRfY291bnQ=::OA==::bF9wbWFfZGlyZWN0X3dvcmRfY291bnQ="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9wbWFfZGlyZWN0X3dvcmRfd2lkdGg=::MTA=::bF9wbWFfZGlyZWN0X3dvcmRfd2lkdGg="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9zdGRfdHhfd29yZF9jb3VudA==::MQ==::bF9zdGRfdHhfd29yZF9jb3VudA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9zdGRfdHhfd29yZF93aWR0aA==::MTA=::bF9zdGRfdHhfd29yZF93aWR0aA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9zdGRfdHhfZmllbGRfd2lkdGg=::MTE=::bF9zdGRfdHhfZmllbGRfd2lkdGg="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9zdGRfcnhfd29yZF9jb3VudA==::MQ==::bF9zdGRfcnhfd29yZF9jb3VudA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9zdGRfcnhfd29yZF93aWR0aA==::MTA=::bF9zdGRfcnhfd29yZF93aWR0aA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_COMPONENT_PARAMETER "bF9zdGRfcnhfZmllbGRfd2lkdGg=::MTY=::bF9zdGRfcnhfZmllbGRfd2lkdGg="
+
+set_global_assignment -library "FELIX_RX" -name VHDL_FILE [file join $::quartus(qip_path) "FELIX_RX.vhd"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/altera_xcvr_functions.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/sv_reconfig_bundle_to_xcvr.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/sv_reconfig_bundle_to_ip.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/sv_reconfig_bundle_merger.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_xcvr_h.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_xcvr_avmm_csr.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_tx_pma_ch.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_tx_pma.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_rx_pma.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_pma.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_pcs_ch.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_pcs.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_xcvr_avmm.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_xcvr_native.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_xcvr_plls.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_xcvr_data_adapter.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_reconfig_bundle_to_basic.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_reconfig_bundle_to_xcvr.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_hssi_8g_rx_pcs_rbc.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_hssi_8g_tx_pcs_rbc.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_hssi_common_pcs_pma_interface_rbc.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_hssi_common_pld_pcs_interface_rbc.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_hssi_pipe_gen1_2_rbc.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_hssi_rx_pcs_pma_interface_rbc.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_hssi_rx_pld_pcs_interface_rbc.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_hssi_tx_pcs_pma_interface_rbc.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/av_hssi_tx_pld_pcs_interface_rbc.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/alt_reset_ctrl_lego.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/alt_reset_ctrl_tgx_cdrauto.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/alt_xcvr_resync.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/alt_xcvr_csr_common_h.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/alt_xcvr_csr_common.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/alt_xcvr_csr_pcs8g_h.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/alt_xcvr_csr_pcs8g.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/alt_xcvr_csr_selector.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/alt_xcvr_mgmt2dec.sv"]
+set_global_assignment -library "FELIX_RX" -name VERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/altera_wait_generate.v"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/altera_xcvr_native_av_functions_h.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/altera_xcvr_native_av.sv"]
+set_global_assignment -library "FELIX_RX" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "FELIX_RX/altera_xcvr_data_adapter_av.sv"]
+set_global_assignment -library "FELIX_RX" -name SOURCE_FILE [file join $::quartus(qip_path) "FELIX_RX/plain_files.txt"]
+
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_TOOL_NAME "altera_xcvr_native_av"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_TOOL_VERSION "16.0"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_RX" -name IP_TOOL_ENV "mwpim"

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="CDS_DATA_PLL_sim/CDS_DATA_PLL.vho" type="VHDL" />
+ <topLevel name="CDS_DATA_PLL" />
+ <deviceFamily name="arriav" />
+</simPackage>

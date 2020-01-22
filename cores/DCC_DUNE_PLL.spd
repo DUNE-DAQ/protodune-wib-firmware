@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="DCC_DUNE_PLL_sim/DCC_DUNE_PLL.vho" type="VHDL" />
+ <topLevel name="DCC_DUNE_PLL" />
+ <deviceFamily name="arriav" />
+</simPackage>
