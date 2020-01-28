@@ -67,20 +67,36 @@ architecture behavioral of RCE_PCS is
       rdempty : OUT STD_LOGIC);
   end component LINK_FIFO;
   
-  component RCE_LINK is
-    port (
-      pll_powerdown        : in  std_logic_vector(3 downto 0)   := (others => '0');     
-      tx_analogreset       : in  std_logic_vector(3 downto 0)   := (others => '0');
-      tx_digitalreset      : in  std_logic_vector(3 downto 0)   := (others => '0');
-      tx_pll_refclk        : in  std_logic_vector(0 downto 0)   := (others => '0');
-      tx_pma_clkout        : out std_logic_vector(3 downto 0);
-      tx_serial_data       : out std_logic_vector(3 downto 0);
-      tx_pma_parallel_data : in  std_logic_vector(319 downto 0) := (others => '0');
-      pll_locked           : out std_logic_vector(3 downto 0);
-      tx_cal_busy          : out std_logic_vector(3 downto 0);
-      reconfig_to_xcvr     : in  std_logic_vector(559 downto 0) := (others => '0');
-      reconfig_from_xcvr   : out std_logic_vector(367 downto 0));
-  end component RCE_LINK;
+--  component RCE_LINK is
+--    port (
+--      pll_powerdown        : in  std_logic_vector(3 downto 0)   := (others => '0');     
+--      tx_analogreset       : in  std_logic_vector(3 downto 0)   := (others => '0');
+--      tx_digitalreset      : in  std_logic_vector(3 downto 0)   := (others => '0');
+--      tx_pll_refclk        : in  std_logic_vector(0 downto 0)   := (others => '0');
+--      tx_pma_clkout        : out std_logic_vector(3 downto 0);
+--      tx_serial_data       : out std_logic_vector(3 downto 0);
+--      tx_pma_parallel_data : in  std_logic_vector(319 downto 0) := (others => '0');
+--      pll_locked           : out std_logic_vector(3 downto 0);
+--      tx_cal_busy          : out std_logic_vector(3 downto 0);
+--      reconfig_to_xcvr     : in  std_logic_vector(559 downto 0) := (others => '0');
+--      reconfig_from_xcvr   : out std_logic_vector(367 downto 0));
+--  end component RCE_LINK;
+
+  component FELIX_QUAD_LINK is
+  	port (
+  		pll_powerdown        : in  std_logic_vector(3 downto 0)   := (others => '0'); --        pll_powerdown.pll_powerdown
+  		tx_analogreset       : in  std_logic_vector(3 downto 0)   := (others => '0'); --       tx_analogreset.tx_analogreset
+  		tx_digitalreset      : in  std_logic_vector(3 downto 0)   := (others => '0'); --      tx_digitalreset.tx_digitalreset
+  		tx_pll_refclk        : in  std_logic_vector(0 downto 0)   := (others => '0'); --        tx_pll_refclk.tx_pll_refclk
+  		tx_pma_clkout        : out std_logic_vector(3 downto 0);                      --        tx_pma_clkout.tx_pma_clkout
+  		tx_serial_data       : out std_logic_vector(3 downto 0);                      --       tx_serial_data.tx_serial_data
+  		tx_pma_parallel_data : in  std_logic_vector(319 downto 0) := (others => '0'); -- tx_pma_parallel_data.tx_pma_parallel_data
+  		pll_locked           : out std_logic_vector(3 downto 0);                      --           pll_locked.pll_locked
+  		tx_cal_busy          : out std_logic_vector(3 downto 0);                      --          tx_cal_busy.tx_cal_busy
+  		reconfig_to_xcvr     : in  std_logic_vector(559 downto 0) := (others => '0'); --     reconfig_to_xcvr.reconfig_to_xcvr
+  		reconfig_from_xcvr   : out std_logic_vector(367 downto 0)                     --   reconfig_from_xcvr.reconfig_from_xcvr
+  	);
+  end component FELIX_QUAD_LINK;
 
   component trans_reseter is
     generic (
@@ -154,7 +170,7 @@ begin  -- architecture behavioral
           eout_dat    => data_10b(iLink)(iEnc),
           eout_rdcomb => rdisp_out_comb(iLink)(iEnc),
           eout_rdreg  => rdisp_out_reg(iLink)(iEnc));
-   
+  
     end generate encoder_chain;
 
     pipeline_delay_1: entity work.pipeline_delay
@@ -199,7 +215,7 @@ begin  -- architecture behavioral
   tx_digitalreset <= local_tx_digitalreset;
   tx_ready        <= local_tx_ready;
   pll_locked      <= local_pll_locked;
-  tx_cal_busy     <= local_tx_cal_busy;  
+  tx_cal_busy     <= local_tx_cal_busy;
 
   reset_extend: process (sys_clk) is
   begin  -- process reset_extend
@@ -221,7 +237,6 @@ begin  -- architecture behavioral
       pll_locked      => local_pll_locked,
       tx_cal_busy     => local_tx_cal_busy,
       tx_ready        => local_tx_ready);
-
 --  RCE_link_Reset_1: RCE_link_Reset
 --    port map (
 --      clock           => sys_clk,
@@ -314,7 +329,8 @@ begin  -- architecture behavioral
 --    end if;
 --  end process tx_reseter;
   
-  RCE_LINK_1: RCE_LINK
+--  RCE_LINK_1: RCE_LINK
+  FELIX_QUAD_LINK_1: FELIX_QUAD_LINK
     port map (
       pll_powerdown        => local_pll_powerdown,
       tx_analogreset       => local_tx_analogreset,
