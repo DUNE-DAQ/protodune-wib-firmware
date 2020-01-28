@@ -1227,7 +1227,8 @@ begin
   QSFP_Tx_P <= QSFP_Tx;
 
   DAQ_CLOCK_SWITCH_RCE: if CDAS_PER_DAQ_LINK = 2 generate
-    DAQ_refclk <= RCE_Tx_refclk_P;
+--    DAQ_refclk <= RCE_Tx_refclk_P;
+	 DAQ_refclk <= FELIX_Tx_refclk_P;
   end generate DAQ_CLOCK_SWITCH_RCE;
   DAQ_CLOCK_SWITCH_FELIX: if CDAS_PER_DAQ_LINK = 4 generate
     DAQ_refclk <= FELIX_Tx_refclk_P;

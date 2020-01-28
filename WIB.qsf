@@ -130,9 +130,9 @@ set_location_assignment PIN_N32 -to QSFP_TX_P[2]
 set_location_assignment PIN_U32 -to QSFP_TX_P[3]
 #set_location_assignment PIN_H34 -to QSFP_RX_P
 #RCE refclock
-set_location_assignment PIN_U26 -to RCE_Tx_refclk_P
+#set_location_assignment PIN_U26 -to RCE_Tx_refclk_P
 #FELIX refclock
-#set_location_assignment PIN_AA27 -to FELIX_Tx_refclk_P
+set_location_assignment PIN_AA27 -to FELIX_Tx_refclk_P
 
 
 set_location_assignment PIN_C31 -to refclk_out
@@ -710,4 +710,7 @@ set_global_assignment -name QIP_FILE cores/RCE_LINK_FIFO.qip
 set_global_assignment -name QIP_FILE cores/LINK_FIFO.qip
 set_global_assignment -name QIP_FILE cores/CD_Simulator_FIFO.qip
 
+
+set_global_assignment -name QIP_FILE cores/FELIX_QUAD_LINK.qip
+set_global_assignment -name SIP_FILE cores/FELIX_QUAD_LINK.sip
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
