@@ -1,5 +1,5 @@
 
-# (C) 2001-2017 Altera Corporation. All rights reserved.
+# (C) 2001-2020 Altera Corporation. All rights reserved.
 # Your use of Altera Corporation's design tools, logic functions and 
 # other software and tools, and its AMPP partner logic functions, and 
 # any output files any of the foregoing (including device programming 
@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 16.0 211 linux 2017.08.31.10:08:53
+# ACDS 17.1 590 linux 2020.01.27.19:09:35
 
 # ----------------------------------------
 # ncsim - auto-generated simulation script
@@ -55,12 +55,17 @@
 # # Run Quartus-generated IP simulation script once to compile Quartus EDA
 # # simulation libraries and Quartus-generated IP simulation files, and copy
 # # any ROM/RAM initialization files to the simulation directory.
-# # - If necessary, specify USER_DEFINED_COMPILE_OPTIONS.
+# # - If necessary, specify any compilation options:
+# #   USER_DEFINED_COMPILE_OPTIONS
+# #   USER_DEFINED_VHDL_COMPILE_OPTIONS applied to vhdl compiler
+# #   USER_DEFINED_VERILOG_COMPILE_OPTIONS applied to verilog compiler
 # #
 # source <script generation output directory>/cadence/ncsim_setup.sh \
 # SKIP_ELAB=1 \
 # SKIP_SIM=1 \
 # USER_DEFINED_COMPILE_OPTIONS=<compilation options for your design> \
+# USER_DEFINED_VHDL_COMPILE_OPTIONS=<VHDL compilation options for your design> \
+# USER_DEFINED_VERILOG_COMPILE_OPTIONS=<Verilog compilation options for your design> \
 # QSYS_SIMDIR=<script generation output directory>
 # #
 # # Compile all design files and testbench files, including the top level.
@@ -101,12 +106,12 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 16.0 211 linux 2017.08.31.10:08:53
+# ACDS 17.1 590 linux 2020.01.27.19:09:35
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="FELIX_LINK"
 QSYS_SIMDIR="./../"
-QUARTUS_INSTALL_DIR="/opt/altera/16.0/quartus/"
+QUARTUS_INSTALL_DIR="/nfs/wimp/home/drivera/intelFPGA/17.1/quartus/"
 SKIP_FILE_COPY=0
 SKIP_DEV_COM=0
 SKIP_COM=0
@@ -146,7 +151,6 @@ mkdir -p ./libraries/altera_ver/
 mkdir -p ./libraries/lpm_ver/
 mkdir -p ./libraries/sgate_ver/
 mkdir -p ./libraries/altera_mf_ver/
-mkdir -p ./libraries/altera_lnsim_ver/
 mkdir -p ./libraries/arriav_ver/
 mkdir -p ./libraries/arriav_hssi_ver/
 mkdir -p ./libraries/arriav_pcie_hip_ver/
@@ -163,84 +167,85 @@ mkdir -p ./libraries/arriav/
 # ----------------------------------------
 # compile device library files
 if [ $SKIP_DEV_COM -eq 0 ]; then
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives.v"                    -work altera_ver         
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QUARTUS_INSTALL_DIR/eda/sim_lib/220model.v"                             -work lpm_ver            
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate.v"                                -work sgate_ver          
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf.v"                            -work altera_mf_ver      
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_lnsim.sv"                        -work altera_lnsim_ver   
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QUARTUS_INSTALL_DIR/eda/sim_lib/cadence/arriav_atoms_ncrypt.v"          -work arriav_ver         
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QUARTUS_INSTALL_DIR/eda/sim_lib/cadence/arriav_hmi_atoms_ncrypt.v"      -work arriav_ver         
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_atoms.v"                         -work arriav_ver         
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QUARTUS_INSTALL_DIR/eda/sim_lib/cadence/arriav_hssi_atoms_ncrypt.v"     -work arriav_hssi_ver    
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_hssi_atoms.v"                    -work arriav_hssi_ver    
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QUARTUS_INSTALL_DIR/eda/sim_lib/cadence/arriav_pcie_hip_atoms_ncrypt.v" -work arriav_pcie_hip_ver
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_pcie_hip_atoms.v"                -work arriav_pcie_hip_ver
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_syn_attributes.vhd"              -work altera             
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_standard_functions.vhd"          -work altera             
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/alt_dspbuilder_package.vhd"             -work altera             
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_europa_support_lib.vhd"          -work altera             
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives_components.vhd"       -work altera             
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives.vhd"                  -work altera             
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/220pack.vhd"                            -work lpm                
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/220model.vhd"                           -work lpm                
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate_pack.vhd"                         -work sgate              
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate.vhd"                              -work sgate              
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf_components.vhd"               -work altera_mf          
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf.vhd"                          -work altera_mf          
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_lnsim_components.vhd"            -work altera_lnsim       
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_atoms.vhd"                       -work arriav             
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_components.vhd"                  -work arriav             
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives.v"                    -work altera_ver         
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/220model.v"                             -work lpm_ver            
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate.v"                                -work sgate_ver          
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf.v"                            -work altera_mf_ver      
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/cadence/arriav_hmi_atoms_ncrypt.v"      -work arriav_ver         
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_atoms.v"                         -work arriav_ver         
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/cadence/arriav_hssi_atoms_ncrypt.v"     -work arriav_hssi_ver    
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_hssi_atoms.v"                    -work arriav_hssi_ver    
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/cadence/arriav_pcie_hip_atoms_ncrypt.v" -work arriav_pcie_hip_ver
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_pcie_hip_atoms.v"                -work arriav_pcie_hip_ver
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_syn_attributes.vhd"              -work altera             
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_standard_functions.vhd"          -work altera             
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/alt_dspbuilder_package.vhd"             -work altera             
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_europa_support_lib.vhd"          -work altera             
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives_components.vhd"       -work altera             
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives.vhd"                  -work altera             
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/220pack.vhd"                            -work lpm                
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/220model.vhd"                           -work lpm                
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate_pack.vhd"                         -work sgate              
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate.vhd"                              -work sgate              
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf_components.vhd"               -work altera_mf          
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf.vhd"                          -work altera_mf          
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_lnsim.sv"                        -work altera_lnsim       
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_lnsim_components.vhd"            -work altera_lnsim       
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/cadence/arriav_atoms_ncrypt.v"          -work arriav             
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_atoms.vhd"                       -work arriav             
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_components.vhd"                  -work arriav             
 fi
 
 # ----------------------------------------
 # compile design files in correct order
 if [ $SKIP_COM -eq 0 ]; then
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_functions.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_to_xcvr.sv"           -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_to_ip.sv"             -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_merger.sv"            -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_h.sv"                            -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_avmm_csr.sv"                     -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_tx_pma_ch.sv"                         -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_tx_pma.sv"                            -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_rx_pma.sv"                            -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_pma.sv"                               -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_pcs_ch.sv"                            -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_pcs.sv"                               -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_avmm.sv"                         -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_native.sv"                       -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_plls.sv"                         -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_data_adapter.sv"                 -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_reconfig_bundle_to_basic.sv"          -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_reconfig_bundle_to_xcvr.sv"           -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_8g_rx_pcs_rbc.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_8g_tx_pcs_rbc.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_common_pcs_pma_interface_rbc.sv" -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_common_pld_pcs_interface_rbc.sv" -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_pipe_gen1_2_rbc.sv"              -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_rx_pcs_pma_interface_rbc.sv"     -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_rx_pld_pcs_interface_rbc.sv"     -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_tx_pcs_pma_interface_rbc.sv"     -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_tx_pld_pcs_interface_rbc.sv"     -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/alt_reset_ctrl_lego.sv"                  -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/alt_reset_ctrl_tgx_cdrauto.sv"           -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_resync.sv"                      -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_common_h.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_common.sv"                  -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_pcs8g_h.sv"                 -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_pcs8g.sv"                   -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_selector.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_mgmt2dec.sv"                    -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog $USER_DEFINED_COMPILE_OPTIONS      "$QSYS_SIMDIR/altera_xcvr_native_av/altera_wait_generate.v"                  -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_native_av_functions_h.sv"    -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_native_av.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvlog -sv $USER_DEFINED_COMPILE_OPTIONS  "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_data_adapter_av.sv"          -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
-  ncvhdl -v93 $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/FELIX_LINK.vhd"                                                                                                      
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_functions.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_to_xcvr.sv"           -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_to_ip.sv"             -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_merger.sv"            -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_h.sv"                            -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_avmm_csr.sv"                     -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_tx_pma_ch.sv"                         -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_tx_pma.sv"                            -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_rx_pma.sv"                            -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_pma.sv"                               -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_pcs_ch.sv"                            -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_pcs.sv"                               -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_avmm.sv"                         -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_native.sv"                       -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_plls.sv"                         -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_data_adapter.sv"                 -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_reconfig_bundle_to_basic.sv"          -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_reconfig_bundle_to_xcvr.sv"           -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_8g_rx_pcs_rbc.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_8g_tx_pcs_rbc.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_common_pcs_pma_interface_rbc.sv" -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_common_pld_pcs_interface_rbc.sv" -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_pipe_gen1_2_rbc.sv"              -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_rx_pcs_pma_interface_rbc.sv"     -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_rx_pld_pcs_interface_rbc.sv"     -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_tx_pcs_pma_interface_rbc.sv"     -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_tx_pld_pcs_interface_rbc.sv"     -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_reset_ctrl_lego.sv"                  -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_reset_ctrl_tgx_cdrauto.sv"           -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_resync.sv"                      -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_common_h.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_common.sv"                  -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_pcs8g_h.sv"                 -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_pcs8g.sv"                   -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_selector.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_mgmt2dec.sv"                    -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/altera_xcvr_native_av/altera_wait_generate.v"                  -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_native_av_functions_h.sv"    -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_native_av.sv"                -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_data_adapter_av.sv"          -work FELIX_LINK -cdslib ./cds_libs/FELIX_LINK.cds.lib
+  ncvhdl -v93 $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS   "$QSYS_SIMDIR/FELIX_LINK.vhd"                                                                                                      
 fi
 
 # ----------------------------------------
 # elaborate top level design
 if [ $SKIP_ELAB -eq 0 ]; then
+  export GENERIC_PARAM_COMPAT_CHECK=1
   ncelab -access +w+r+c -namemap_mixgen -relax $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS $TOP_LEVEL_NAME
 fi
 

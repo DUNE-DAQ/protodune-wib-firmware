@@ -1,5 +1,5 @@
 set_global_assignment -entity "FELIX_LINK" -library "lib_FELIX_LINK" -name IP_TOOL_NAME "altera_xcvr_native_av"
-set_global_assignment -entity "FELIX_LINK" -library "lib_FELIX_LINK" -name IP_TOOL_VERSION "16.0"
+set_global_assignment -entity "FELIX_LINK" -library "lib_FELIX_LINK" -name IP_TOOL_VERSION "17.1"
 set_global_assignment -entity "FELIX_LINK" -library "lib_FELIX_LINK" -name IP_TOOL_ENV "mwpim"
 set_global_assignment -library "lib_FELIX_LINK" -name SPD_FILE [file join $::quartus(sip_path) "FELIX_LINK.spd"]
 

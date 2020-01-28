@@ -1,5 +1,5 @@
 set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_TOOL_NAME "altera_xcvr_native_av"
-set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_TOOL_VERSION "16.0"
+set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_TOOL_VERSION "17.1"
 set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_TOOL_ENV "mwpim"
 set_global_assignment -library "FELIX_LINK" -name MISC_FILE [file join $::quartus(qip_path) "FELIX_LINK.cmp"]
 set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_TARGETED_DEVICE_FAMILY "Arria V"
@@ -11,14 +11,14 @@ set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_COMPON
 set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
 set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_COMPONENT_INTERNAL "On"
 set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_COMPONENT_AUTHOR "QWx0ZXJhIENvcnBvcmF0aW9u"
-set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_COMPONENT_VERSION "MTYuMA=="
+set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_COMPONENT_VERSION "MTcuMQ=="
 set_global_assignment -entity "FELIX_LINK" -library "FELIX_LINK" -name IP_COMPONENT_DESCRIPTION "QXJyaWEgViBUcmFuc2NlaXZlciBOYXRpdmUgUEhZLg=="
 set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_COMPONENT_NAME "YWx0ZXJhX3hjdnJfbmF0aXZlX2F2"
 set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_COMPONENT_DISPLAY_NAME "QXJyaWEgViBUcmFuc2NlaXZlciBOYXRpdmUgUEhZ"
 set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
 set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_COMPONENT_INTERNAL "On"
 set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_COMPONENT_AUTHOR "QWx0ZXJhIENvcnBvcmF0aW9u"
-set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_COMPONENT_VERSION "MTYuMA=="
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_COMPONENT_VERSION "MTcuMQ=="
 set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_COMPONENT_DESCRIPTION "QXJyaWEgViBUcmFuc2NlaXZlciBOYXRpdmUgUEhZLg=="
 set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_COMPONENT_PARAMETER "ZGV2aWNlX2ZhbWlseQ==::QXJyaWEgVg==::ZGV2aWNlX2ZhbWlseQ=="
 set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_COMPONENT_PARAMETER "ZGV2aWNlX3NwZWVkZ3JhZGU=::M19IMw==::RGV2aWNlIHNwZWVkZ3JhZGU="
@@ -116,5 +116,5 @@ set_global_assignment -library "FELIX_LINK" -name SYSTEMVERILOG_FILE [file join 
 set_global_assignment -library "FELIX_LINK" -name SOURCE_FILE [file join $::quartus(qip_path) "FELIX_LINK/plain_files.txt"]
 
 set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_TOOL_NAME "altera_xcvr_native_av"
-set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_TOOL_VERSION "16.0"
+set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_TOOL_VERSION "17.1"
 set_global_assignment -entity "altera_xcvr_native_av" -library "FELIX_LINK" -name IP_TOOL_ENV "mwpim"

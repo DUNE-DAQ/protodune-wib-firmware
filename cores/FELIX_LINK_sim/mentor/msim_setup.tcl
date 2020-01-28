@@ -1,5 +1,5 @@
 
-# (C) 2001-2017 Altera Corporation. All rights reserved.
+# (C) 2001-2020 Altera Corporation. All rights reserved.
 # Your use of Altera Corporation's design tools, logic functions and 
 # other software and tools, and its AMPP partner logic functions, and 
 # any output files any of the foregoing (including device programming 
@@ -46,6 +46,8 @@
 # #
 # # Set any compilation options you require (this is unusual).
 # set USER_DEFINED_COMPILE_OPTIONS <compilation options>
+# set USER_DEFINED_VHDL_COMPILE_OPTIONS <compilation options for VHDL>
+# set USER_DEFINED_VERILOG_COMPILE_OPTIONS <compilation options for Verilog>
 # #
 # # Call command to compile the Quartus EDA simulation library.
 # dev_com
@@ -92,7 +94,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 16.0 211 linux 2017.08.31.10:08:53
+# ACDS 17.1 590 linux 2020.01.27.19:09:34
 
 # ----------------------------------------
 # Initialize variables
@@ -111,11 +113,17 @@ if ![info exists QSYS_SIMDIR] {
 }
 
 if ![info exists QUARTUS_INSTALL_DIR] { 
-  set QUARTUS_INSTALL_DIR "/opt/altera/16.0/quartus/"
+  set QUARTUS_INSTALL_DIR "/nfs/wimp/home/drivera/intelFPGA/17.1/quartus/"
 }
 
 if ![info exists USER_DEFINED_COMPILE_OPTIONS] { 
   set USER_DEFINED_COMPILE_OPTIONS ""
+}
+if ![info exists USER_DEFINED_VHDL_COMPILE_OPTIONS] { 
+  set USER_DEFINED_VHDL_COMPILE_OPTIONS ""
+}
+if ![info exists USER_DEFINED_VERILOG_COMPILE_OPTIONS] { 
+  set USER_DEFINED_VERILOG_COMPILE_OPTIONS ""
 }
 if ![info exists USER_DEFINED_ELAB_OPTIONS] { 
   set USER_DEFINED_ELAB_OPTIONS ""
@@ -180,33 +188,35 @@ vmap       FELIX_LINK ./libraries/FELIX_LINK/
 alias dev_com {
   echo "\[exec\] dev_com"
   if ![ string match "*ModelSim ALTERA*" [ vsim -version ] ] {
-    eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives.v"                     -work altera_ver         
-    eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/220model.v"                              -work lpm_ver            
-    eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate.v"                                 -work sgate_ver          
-    eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf.v"                             -work altera_mf_ver      
-    eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/altera_lnsim_for_vhdl.sv"         -work altera_lnsim_ver   
-    eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_atoms_ncrypt.v"            -work arriav_ver         
-    eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_hmi_atoms_ncrypt.v"        -work arriav_ver         
-    eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_atoms_for_vhdl.v"          -work arriav_ver         
-    eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_hssi_atoms_ncrypt.v"       -work arriav_hssi_ver    
-    eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_hssi_atoms_for_vhdl.v"     -work arriav_hssi_ver    
-    eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_pcie_hip_atoms_ncrypt.v"   -work arriav_pcie_hip_ver
-    eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_pcie_hip_atoms_for_vhdl.v" -work arriav_pcie_hip_ver
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_syn_attributes.vhd"               -work altera             
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_standard_functions.vhd"           -work altera             
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/alt_dspbuilder_package.vhd"              -work altera             
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_europa_support_lib.vhd"           -work altera             
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives_components.vhd"        -work altera             
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives.vhd"                   -work altera             
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/220pack.vhd"                             -work lpm                
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/220model.vhd"                            -work lpm                
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate_pack.vhd"                          -work sgate              
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate.vhd"                               -work sgate              
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf_components.vhd"                -work altera_mf          
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf.vhd"                           -work altera_mf          
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_lnsim_components.vhd"             -work altera_lnsim       
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_atoms.vhd"                        -work arriav             
-    eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_components.vhd"                   -work arriav             
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives.v"                   -work altera_ver         
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/220model.v"                            -work lpm_ver            
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate.v"                               -work sgate_ver          
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf.v"                           -work altera_mf_ver      
+    eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_lnsim.sv"                       -work altera_lnsim_ver   
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_atoms_ncrypt.v"          -work arriav_ver         
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_hmi_atoms_ncrypt.v"      -work arriav_ver         
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_atoms.v"                        -work arriav_ver         
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_hssi_atoms_ncrypt.v"     -work arriav_hssi_ver    
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_hssi_atoms.v"                   -work arriav_hssi_ver    
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_pcie_hip_atoms_ncrypt.v" -work arriav_pcie_hip_ver
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_pcie_hip_atoms.v"               -work arriav_pcie_hip_ver
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_syn_attributes.vhd"             -work altera             
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_standard_functions.vhd"         -work altera             
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/alt_dspbuilder_package.vhd"            -work altera             
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_europa_support_lib.vhd"         -work altera             
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives_components.vhd"      -work altera             
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_primitives.vhd"                 -work altera             
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/220pack.vhd"                           -work lpm                
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/220model.vhd"                          -work lpm                
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate_pack.vhd"                        -work sgate              
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/sgate.vhd"                             -work sgate              
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf_components.vhd"              -work altera_mf          
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf.vhd"                         -work altera_mf          
+    eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/altera_lnsim_for_vhdl.sv"       -work altera_lnsim       
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/altera_lnsim_components.vhd"           -work altera_lnsim       
+    eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QUARTUS_INSTALL_DIR/eda/sim_lib/mentor/arriav_atoms_ncrypt.v"          -work arriav             
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_atoms.vhd"                      -work arriav             
+    eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QUARTUS_INSTALL_DIR/eda/sim_lib/arriav_components.vhd"                 -work arriav             
   }
 }
 
@@ -214,87 +224,87 @@ alias dev_com {
 # Compile the design files in correct order
 alias com {
   echo "\[exec\] com"
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_functions.sv"                       -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/altera_xcvr_functions.sv"                -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_to_xcvr.sv"                  -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_to_ip.sv"                    -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_merger.sv"                   -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/sv_reconfig_bundle_to_xcvr.sv"           -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/sv_reconfig_bundle_to_ip.sv"             -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/sv_reconfig_bundle_merger.sv"            -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_h.sv"                                   -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_avmm_csr.sv"                            -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_tx_pma_ch.sv"                                -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_tx_pma.sv"                                   -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_rx_pma.sv"                                   -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_pma.sv"                                      -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_pcs_ch.sv"                                   -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_pcs.sv"                                      -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_avmm.sv"                                -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_native.sv"                              -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_plls.sv"                                -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_data_adapter.sv"                        -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_reconfig_bundle_to_basic.sv"                 -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_reconfig_bundle_to_xcvr.sv"                  -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_h.sv"                            -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_avmm_csr.sv"                     -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_tx_pma_ch.sv"                         -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_tx_pma.sv"                            -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_rx_pma.sv"                            -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_pma.sv"                               -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_pcs_ch.sv"                            -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_pcs.sv"                               -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_avmm.sv"                         -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_native.sv"                       -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_plls.sv"                         -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_data_adapter.sv"                 -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_reconfig_bundle_to_basic.sv"          -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_reconfig_bundle_to_xcvr.sv"           -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_8g_rx_pcs_rbc.sv"                       -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_8g_tx_pcs_rbc.sv"                       -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_common_pcs_pma_interface_rbc.sv"        -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_common_pld_pcs_interface_rbc.sv"        -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_pipe_gen1_2_rbc.sv"                     -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_rx_pcs_pma_interface_rbc.sv"            -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_rx_pld_pcs_interface_rbc.sv"            -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_tx_pcs_pma_interface_rbc.sv"            -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_tx_pld_pcs_interface_rbc.sv"            -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_8g_rx_pcs_rbc.sv"                -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_8g_tx_pcs_rbc.sv"                -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_common_pcs_pma_interface_rbc.sv" -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_common_pld_pcs_interface_rbc.sv" -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_pipe_gen1_2_rbc.sv"              -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_rx_pcs_pma_interface_rbc.sv"     -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_rx_pld_pcs_interface_rbc.sv"     -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_tx_pcs_pma_interface_rbc.sv"     -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_tx_pld_pcs_interface_rbc.sv"     -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_reset_ctrl_lego.sv"                         -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_reset_ctrl_tgx_cdrauto.sv"                  -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_resync.sv"                             -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_reset_ctrl_lego.sv"                  -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_reset_ctrl_tgx_cdrauto.sv"           -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_resync.sv"                      -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_common_h.sv"                       -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_common.sv"                         -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_pcs8g_h.sv"                        -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_pcs8g.sv"                          -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_selector.sv"                       -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_mgmt2dec.sv"                           -work FELIX_LINK
-  eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/altera_xcvr_native_av/altera_wait_generate.v"                         -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_csr_common_h.sv"                -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_csr_common.sv"                  -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_csr_pcs8g_h.sv"                 -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_csr_pcs8g.sv"                   -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_csr_selector.sv"                -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_mgmt2dec.sv"                    -work FELIX_LINK
-  eval  vlog $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/altera_wait_generate.v"                  -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_native_av_functions_h.sv"           -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_native_av.sv"                       -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_data_adapter_av.sv"                 -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/altera_xcvr_native_av_functions_h.sv"    -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/altera_xcvr_native_av.sv"                -work FELIX_LINK
-  eval  vlog -sv $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/altera_xcvr_data_adapter_av.sv"          -work FELIX_LINK
-  eval  vcom $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/FELIX_LINK.vhd"                                                                       
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_functions.sv"                       -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/altera_xcvr_functions.sv"                -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_to_xcvr.sv"                  -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_to_ip.sv"                    -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/sv_reconfig_bundle_merger.sv"                   -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/sv_reconfig_bundle_to_xcvr.sv"           -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/sv_reconfig_bundle_to_ip.sv"             -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/sv_reconfig_bundle_merger.sv"            -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_h.sv"                                   -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_avmm_csr.sv"                            -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_tx_pma_ch.sv"                                -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_tx_pma.sv"                                   -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_rx_pma.sv"                                   -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_pma.sv"                                      -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_pcs_ch.sv"                                   -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_pcs.sv"                                      -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_avmm.sv"                                -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_native.sv"                              -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_plls.sv"                                -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_xcvr_data_adapter.sv"                        -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_reconfig_bundle_to_basic.sv"                 -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_reconfig_bundle_to_xcvr.sv"                  -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_h.sv"                            -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_avmm_csr.sv"                     -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_tx_pma_ch.sv"                         -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_tx_pma.sv"                            -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_rx_pma.sv"                            -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_pma.sv"                               -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_pcs_ch.sv"                            -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_pcs.sv"                               -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_avmm.sv"                         -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_native.sv"                       -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_plls.sv"                         -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_xcvr_data_adapter.sv"                 -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_reconfig_bundle_to_basic.sv"          -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_reconfig_bundle_to_xcvr.sv"           -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_8g_rx_pcs_rbc.sv"                       -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_8g_tx_pcs_rbc.sv"                       -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_common_pcs_pma_interface_rbc.sv"        -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_common_pld_pcs_interface_rbc.sv"        -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_pipe_gen1_2_rbc.sv"                     -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_rx_pcs_pma_interface_rbc.sv"            -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_rx_pld_pcs_interface_rbc.sv"            -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_tx_pcs_pma_interface_rbc.sv"            -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/av_hssi_tx_pld_pcs_interface_rbc.sv"            -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_8g_rx_pcs_rbc.sv"                -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_8g_tx_pcs_rbc.sv"                -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_common_pcs_pma_interface_rbc.sv" -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_common_pld_pcs_interface_rbc.sv" -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_pipe_gen1_2_rbc.sv"              -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_rx_pcs_pma_interface_rbc.sv"     -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_rx_pld_pcs_interface_rbc.sv"     -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_tx_pcs_pma_interface_rbc.sv"     -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/av_hssi_tx_pld_pcs_interface_rbc.sv"     -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_reset_ctrl_lego.sv"                         -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_reset_ctrl_tgx_cdrauto.sv"                  -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_resync.sv"                             -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_reset_ctrl_lego.sv"                  -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_reset_ctrl_tgx_cdrauto.sv"           -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_resync.sv"                      -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_common_h.sv"                       -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_common.sv"                         -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_pcs8g_h.sv"                        -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_pcs8g.sv"                          -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_csr_selector.sv"                       -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/alt_xcvr_mgmt2dec.sv"                           -work FELIX_LINK
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/altera_xcvr_native_av/altera_wait_generate.v"                         -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_csr_common_h.sv"                -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_csr_common.sv"                  -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_csr_pcs8g_h.sv"                 -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_csr_pcs8g.sv"                   -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_csr_selector.sv"                -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/alt_xcvr_mgmt2dec.sv"                    -work FELIX_LINK
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/altera_wait_generate.v"                  -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_native_av_functions_h.sv"           -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_native_av.sv"                       -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/altera_xcvr_data_adapter_av.sv"                 -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/altera_xcvr_native_av_functions_h.sv"    -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/altera_xcvr_native_av.sv"                -work FELIX_LINK
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/altera_xcvr_native_av/mentor/altera_xcvr_data_adapter_av.sv"          -work FELIX_LINK
+  eval  vcom $USER_DEFINED_VHDL_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS        "$QSYS_SIMDIR/FELIX_LINK.vhd"                                                                       
 }
 
 # ----------------------------------------
@@ -332,37 +342,41 @@ alias ld_debug "
 alias h {
   echo "List Of Command Line Aliases"
   echo
-  echo "file_copy                     -- Copy ROM/RAM files to simulation directory"
+  echo "file_copy                                         -- Copy ROM/RAM files to simulation directory"
   echo
-  echo "dev_com                       -- Compile device library files"
+  echo "dev_com                                           -- Compile device library files"
   echo
-  echo "com                           -- Compile the design files in correct order"
+  echo "com                                               -- Compile the design files in correct order"
   echo
-  echo "elab                          -- Elaborate top level design"
+  echo "elab                                              -- Elaborate top level design"
   echo
-  echo "elab_debug                    -- Elaborate the top level design with novopt option"
+  echo "elab_debug                                        -- Elaborate the top level design with novopt option"
   echo
-  echo "ld                            -- Compile all the design files and elaborate the top level design"
+  echo "ld                                                -- Compile all the design files and elaborate the top level design"
   echo
-  echo "ld_debug                      -- Compile all the design files and elaborate the top level design with -novopt"
+  echo "ld_debug                                          -- Compile all the design files and elaborate the top level design with -novopt"
   echo
   echo 
   echo
   echo "List Of Variables"
   echo
-  echo "TOP_LEVEL_NAME                -- Top level module name."
-  echo "                                 For most designs, this should be overridden"
-  echo "                                 to enable the elab/elab_debug aliases."
+  echo "TOP_LEVEL_NAME                                    -- Top level module name."
+  echo "                                                     For most designs, this should be overridden"
+  echo "                                                     to enable the elab/elab_debug aliases."
   echo
-  echo "SYSTEM_INSTANCE_NAME          -- Instantiated system module name inside top level module."
+  echo "SYSTEM_INSTANCE_NAME                              -- Instantiated system module name inside top level module."
   echo
-  echo "QSYS_SIMDIR                   -- Qsys base simulation directory."
+  echo "QSYS_SIMDIR                                       -- Platform Designer base simulation directory."
   echo
-  echo "QUARTUS_INSTALL_DIR           -- Quartus installation directory."
+  echo "QUARTUS_INSTALL_DIR                               -- Quartus installation directory."
   echo
-  echo "USER_DEFINED_COMPILE_OPTIONS  -- User-defined compile options, added to com/dev_com aliases."
+  echo "USER_DEFINED_COMPILE_OPTIONS                      -- User-defined compile options, added to com/dev_com aliases."
   echo
-  echo "USER_DEFINED_ELAB_OPTIONS     -- User-defined elaboration options, added to elab/elab_debug aliases."
+  echo "USER_DEFINED_ELAB_OPTIONS                         -- User-defined elaboration options, added to elab/elab_debug aliases."
+  echo
+  echo "USER_DEFINED_VHDL_COMPILE_OPTIONS                 -- User-defined vhdl compile options, added to com/dev_com aliases."
+  echo
+  echo "USER_DEFINED_VERILOG_COMPILE_OPTIONS              -- User-defined verilog compile options, added to com/dev_com aliases."
 }
 file_copy
 h
