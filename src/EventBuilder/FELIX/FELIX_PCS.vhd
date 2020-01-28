@@ -20,9 +20,9 @@ entity FELIX_PCS is
     pll_locked      : out std_logic_vector(TX_COUNT - 1 downto 0);
     tx_cal_busy     : out std_logic_vector(TX_COUNT - 1 downto 0);  
     tx_refclk       : in  std_logic;
-    tx              : out std_logic_vector(TX_COUNT - 1 downto 0);    
+    tx              : out std_logic_vector(TX_COUNT - 1 downto 0);
     clk_data        : out std_logic;
-    data_wr         : in  std_logic_Vector(TX_COUNT -1 downto 0);
+    data_wr         : in  std_logic_vector(TX_COUNT - 1 downto 0);
     k_data          : in  std_logic_vector(TX_COUNT*WORD_WIDTH     - 1 downto 0);
     data            : in  std_logic_vector(TX_COUNT*WORD_WIDTH * 8 - 1 downto 0));
 end entity FELIX_PCS;  
@@ -95,8 +95,8 @@ architecture behavioral of FELIX_PCS is
       tx_cal_busy     : in  std_logic_vector(TX_COUNT - 1 downto 0);
       tx_ready        : out std_logic_vector(TX_COUNT - 1 downto 0));
   end component trans_reseter;
-  
-  signal clk_pcs        : std_logic_vector(1 downto 0);
+
+  signal clk_pcs : std_logic_vector(1 downto 0);
 
 
   --reset controller
@@ -155,7 +155,7 @@ begin  -- architecture behavioral
           eout_rdcomb => rdisp_out_comb(iLink)(iEnc),
           eout_rdreg  => rdisp_out_reg(iLink)(iEnc));
   
-    end generate encoder_chain;       
+    end generate encoder_chain;
 
     pipeline_delay_1: entity work.pipeline_delay
       generic map (
@@ -190,7 +190,7 @@ begin  -- architecture behavioral
       port map (
         clk      => clk_pcs(iLink),
         data_in  => pma_parallel_data_post_buffer(((iLink+1)*80)-1 downto iLink*80),
-        data_out => pma_parallel_data(((iLink+1)*80)-1 downto iLink*80));   
+        data_out => pma_parallel_data(((iLink+1)*80)-1 downto iLink*80));
   end generate LINK_loop;
 
 
